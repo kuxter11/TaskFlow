@@ -1,10 +1,15 @@
 import { useState } from "react";
 import AuthModal from "./components/auth/AuthModal";
 import type { AuthMode } from "./types/auth.types";
+import Sidebar from "./components/auth/layout/Sidebar/Siderbar";
+import TopBar from "./components/auth/layout/TopBar/TopBar";
+import "./App.css";
 
 function App() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<AuthMode>("login");
+
+  const [activeItem, setActiveItem] = useState("Dashboard");
 
   const openAuthModal = (mode: AuthMode) => {
     setAuthMode(mode);
@@ -12,20 +17,20 @@ function App() {
   };
 
   return (
-    <>
-      <header className="app-header">
-        <h1>TaskFlow</h1>
+    <div className="app-layout">
+      <Sidebar activeItem={activeItem} onNavigate={setActiveItem} />
 
-        <div className="auth-buttons">
-          <button onClick={() => openAuthModal("login")}>Login</button>
+      <div className="main-layout">
+        <TopBar
+          onLogin={() => openAuthModal("login")}
+          onRegister={() => openAuthModal("register")}
+        />
 
-          <button onClick={() => openAuthModal("register")}>Register</button>
-        </div>
-      </header>
-
-      <main>
-        <h2>Welcome!</h2>
-      </main>
+        <main className="app-content">
+          <h1>{activeItem}</h1>
+          <p>Your page content goes here.</p>
+        </main>
+      </div>
 
       <AuthModal
         key={authMode}
@@ -33,7 +38,7 @@ function App() {
         initialMode={authMode}
         onClose={() => setIsAuthOpen(false)}
       />
-    </>
+    </div>
   );
 }
 

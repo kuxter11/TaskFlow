@@ -21,6 +21,7 @@ export default function AuthModal({
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
 
   // Synchronize React state with native HTML dialog.
@@ -137,6 +138,22 @@ export default function AuthModal({
             minLength={8}
           />
         </div>
+
+        {mode === "register" && (
+          <div className="auth-field">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+
+            <input
+              id="confirmPassword"
+              type="password"
+              placeholder="Enter confirm your password"
+              value={confirmPassword}
+              onChange={(event) => setConfirmPassword(event.target.value)}
+              required
+              minLength={8}
+            />
+          </div>
+        )}
 
         <button className="auth-submit" type="submit">
           {mode === "login" ? "Sign in" : "Create account"}
