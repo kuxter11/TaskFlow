@@ -1,0 +1,115 @@
+# ==============================
+# .NET
+# ==============================
+
+# Build output
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]rtifacts/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# .NET generated files
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Test results
+[Tt]est[Rr]esult*/
+*.trx
+coverage/
+
+# ==============================
+# React / Node.js
+# ==============================
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+.next/
+out/
+
+# Vite
+.vite/
+
+# Cache
+.npm/
+.yarn/cache/
+.pnpm-store/
+.parcel-cache/
+.eslintcache
+*.tsbuildinfo
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ==============================
+# Environment variables
+# ==============================
+
+.env
+.env.*
+!.env.example
+
+# ==============================
+# IDEs and editors
+# ==============================
+
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+.history/
+*.swp
+*.swo
+
+# ==============================
+# Operating system
+# ==============================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==============================
+# Logs and temporary files
+# ==============================
+
+*.log
+logs/
+tmp/
+temp/
+
+# ==============================
+# Secrets and certificates
+# ==============================
+
+*.pfx
+*.p12
+*.key
+*.pem
+secrets.json
