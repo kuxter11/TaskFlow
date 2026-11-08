@@ -1,4 +1,4 @@
-﻿namespace API.Dtos.Auth
+﻿namespace API.Dtos.Auth.Response
 {
     public class TokenResponseDto
     {

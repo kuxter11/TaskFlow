@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using API.Data;
 using API.Dtos.Auth;
+using API.Dtos.Auth.Response;
 using API.Entities;
 using API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;

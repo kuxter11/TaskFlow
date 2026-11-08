@@ -1,4 +1,5 @@
 ﻿using API.Dtos.Auth;
+using API.Dtos.Auth.Response;
 using API.Entities;
 using API.Enums;
 using API.Services.Interfaces;
@@ -13,16 +14,16 @@ namespace API.Controllers
         : ControllerBase
     {
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(RegisterUserDto dto)
+        public async Task<ActionResult<RegisterUserResponseDto>> Register(RegisterUserDto dto)
         {
-            var user = await authService.RegisterAsync(dto);
+            var registeredUser = await authService.RegisterAsync(dto);
 
-            if (user is null)
+            if (registeredUser is null)
             {
                 return BadRequest("User already exists.");
             }
 
-            return Ok(user);
+            return Ok(registeredUser);
         }
 
         [HttpPost("login")]

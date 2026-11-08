@@ -1,4 +1,5 @@
 ﻿using API.Dtos.Auth;
+using API.Dtos.Auth.Response;
 using API.Entities;
 
 namespace API.Services.Interfaces

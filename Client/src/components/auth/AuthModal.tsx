@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type SyntheticEvent } from "react";
 
 import type { AuthMode } from "../../types/auth.types";
 import "./AuthModal.css";
+import { login, register } from "../../api/auth.api";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -16,15 +17,16 @@ export default function AuthModal({
 }: AuthModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  // Current active tab.
   const [mode, setMode] = useState<AuthMode>(initialMode);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [name, setName] = useState("");
+  const [username, setName] = useState("");
 
-  // Synchronize React state with native HTML dialog.
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
   useEffect(() => {
     const dialog = dialogRef.current;
 
@@ -37,20 +39,49 @@ export default function AuthModal({
     }
   }, [isOpen]);
 
-  // Handle form submission.
-  const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (mode === "login") {
-      console.log("Login:", { email, password });
-    } else {
-      console.log("Register:", { name, email, password });
+    setIsLoading(true);
+    setError("");
+
+    try {
+      if (mode === "login") {
+        const result = await login({
+          username,
+          password,
+        });
+        console.log("Login successful", result);
+      } else {
+        const result = await register({
+          username,
+          email,
+          password,
+          confirmPassword,
+        });
+        console.log("Register successful", result);
+      }
+
+      resetForm();
+      onClose();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // Switch between tabs.
   const switchMode = (newMode: AuthMode) => {
     setMode(newMode);
+    setError("");
+  };
+
+  const resetForm = () => {
+    setEmail("");
+    setPassword("");
+    setName("");
+    setError("");
+    setIsLoading(false);
   };
 
   return (
@@ -99,28 +130,27 @@ export default function AuthModal({
       <form onSubmit={handleSubmit}>
         {mode === "register" && (
           <div className="auth-field">
-            <label htmlFor="name">Full name</label>
+            <label htmlFor="email">Email</label>
 
             <input
-              id="name"
-              type="text"
-              placeholder="John Doe"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
               required
             />
           </div>
         )}
-
         <div className="auth-field">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="username">Username</label>
 
           <input
-            id="email"
-            type="email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            id="username"
+            type="text"
+            placeholder="JonDoe297"
+            value={username}
+            onChange={(event) => setName(event.target.value)}
             required
           />
         </div>
@@ -155,8 +185,18 @@ export default function AuthModal({
           </div>
         )}
 
-        <button className="auth-submit" type="submit">
-          {mode === "login" ? "Sign in" : "Create account"}
+        {error && (
+          <div className="auth-error" role="alert">
+            {error}
+          </div>
+        )}
+
+        <button className="auth-submit" type="submit" disabled={isLoading}>
+          {isLoading
+            ? "Please wait..."
+            : mode === "login"
+              ? "Sign in"
+              : "Create account"}
         </button>
       </form>
     </dialog>

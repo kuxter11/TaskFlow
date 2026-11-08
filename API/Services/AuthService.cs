@@ -1,4 +1,5 @@
 ﻿using API.Dtos.Auth;
+using API.Dtos.Auth.Response;
 using API.Entities;
 using API.Enums;
 using API.Repositories.Interfaces;
@@ -32,7 +33,7 @@ namespace API.Services
             return await tokenService.CreateTokenResponse(user);
         }
 
-        public async Task<RegisterUserDto?> RegisterAsync(RegisterUserDto dto)
+        public async Task<RegisterUserResponseDto?> RegisterAsync(RegisterUserDto dto)
         {
             var existingUser = await userRepository.GetByUsernameAsync(dto.Username);
             if (existingUser is not null)
@@ -54,7 +55,12 @@ namespace API.Services
             newUser.Role = UserRole.User; // Default role
 
             await userRepository.AddAsync(newUser);
-            return dto;
+            return new RegisterUserResponseDto
+            {
+                Username = newUser.Username,
+                Email = newUser.Email,
+                Role = newUser.Role,
+            };
         }
     }
 }
