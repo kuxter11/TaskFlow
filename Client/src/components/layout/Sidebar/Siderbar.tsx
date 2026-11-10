@@ -6,9 +6,12 @@ import {
   Folders,
   UserGroup,
   CalendarDays,
+  ChevronRight,
+  ChevronLeft,
 } from "lucide-react";
 
 import "./Sidebar.css";
+import { useState } from "react";
 
 interface SidebarProps {
   activeItem: string;
@@ -16,31 +19,32 @@ interface SidebarProps {
 }
 
 const navigationItems = [
-  {
-    label: "Dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    label: "Projects",
-    icon: Folders,
-  },
-  {
-    label: "Team",
-    icon: UserGroup,
-  },
-  {
-    label: "Calendar",
-    icon: CalendarDays,
-  },
-  {
-    label: "Settings",
-    icon: Settings,
-  },
+  { label: "Dashboard", icon: LayoutDashboard },
+  { label: "Projects", icon: Folders },
+  { label: "Team", icon: UserGroup },
+  { label: "Calendar", icon: CalendarDays },
+  { label: "Settings", icon: Settings },
 ];
 
 export default function Sidebar({ activeItem, onNavigate }: SidebarProps) {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsCollapsed((previous) => !previous);
+  };
+
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isCollapsed ? "sidebar--collapsed" : ""}`}>
+      <button
+        type="button"
+        className="sidebar-toggle"
+        onClick={toggleSidebar}
+        aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+        aria-expanded={!isCollapsed}
+      >
+        {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+      </button>
+
       <div className="sidebar-brand">
         <div className="brand-logo">M</div>
         <span>TaskFlow</span>

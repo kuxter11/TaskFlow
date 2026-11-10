@@ -1,15 +1,65 @@
 .sidebar {
+  position: relative;
   width: 250px;
   min-width: 250px;
   min-height: 100vh;
   flex-shrink: 0;
-
   display: flex;
   flex-direction: column;
-
   padding: 24px 16px;
   background: #17172b;
   color: #ffffff;
+  transition:
+    width 0.25s ease,
+    min-width 0.25s ease,
+    padding 0.25s ease;
+}
+
+/* Collapse toggle */
+.sidebar-toggle {
+  position: absolute;
+  top: 28px;
+  right: -12px;
+  z-index: 2;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #6d5ce8;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.sidebar-toggle:hover {
+  background: #7d6df0;
+}
+
+/* Collapsed desktop sidebar */
+.sidebar--collapsed {
+  width: 72px;
+  min-width: 72px;
+  padding: 24px 10px;
+}
+
+.sidebar--collapsed .sidebar-brand {
+  justify-content: center;
+  padding: 0;
+}
+
+.sidebar--collapsed .sidebar-brand span,
+.sidebar--collapsed .sidebar-section-label,
+.sidebar--collapsed .sidebar-link span {
+  display: none;
+}
+
+.sidebar--collapsed .sidebar-link {
+  justify-content: center;
+  gap: 0;
+  padding: 12px 8px;
 }
 
 /* Brand */
@@ -28,6 +78,7 @@
   height: 36px;
   display: grid;
   place-items: center;
+  flex-shrink: 0;
   border-radius: 10px;
   background: #6d5ce8;
   font-size: 18px;
@@ -56,18 +107,14 @@
   display: flex;
   align-items: center;
   gap: 13px;
-
   padding: 12px;
   border: none;
   border-radius: 9px;
-
   background: transparent;
   color: #a6a6bc;
-
   font-size: 14px;
   font-weight: 500;
   text-align: left;
-
   transition: all 0.2s ease;
   cursor: pointer;
 }
@@ -95,7 +142,7 @@
   color: #ff8585;
 }
 
-/* Responsive */
+/* Mobile: always compact, regardless of React state */
 @media (max-width: 600px) {
   .sidebar {
     width: 72px;
@@ -116,6 +163,11 @@
 
   .sidebar-link {
     justify-content: center;
+    gap: 0;
     padding: 12px 8px;
+  }
+
+  .sidebar-toggle {
+    display: none;
   }
 }

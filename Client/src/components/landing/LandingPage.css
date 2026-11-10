@@ -1,0 +1,41 @@
+.landing-page {
+  min-height: 100vh;
+  background: #ffffff;
+  color: #17172b;
+}
+
+.landing-hero-placeholder {
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  text-align: center;
+  background: #f7f6ff;
+}
+
+.landing-hero-placeholder h1 {
+  max-width: 750px;
+  margin: 0 0 20px;
+  color: #17172b;
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.landing-hero-placeholder p {
+  max-width: 600px;
+  margin: 0;
+  color: #66667a;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.app-loading {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  color: #17172b;
+  font-size: 18px;
+}
