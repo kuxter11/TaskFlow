@@ -33,7 +33,7 @@ namespace API.Services
             return await tokenService.CreateTokenResponse(user);
         }
 
-        public async Task<RegisterUserResponseDto?> RegisterAsync(RegisterUserDto dto)
+        public async Task<UserResponseDto?> RegisterAsync(RegisterUserDto dto)
         {
             var existingUser = await userRepository.GetByUsernameAsync(dto.Username);
             if (existingUser is not null)
@@ -55,8 +55,9 @@ namespace API.Services
             newUser.Role = UserRole.User; // Default role
 
             await userRepository.AddAsync(newUser);
-            return new RegisterUserResponseDto
+            return new UserResponseDto
             {
+                Id = newUser.Id,
                 Username = newUser.Username,
                 Email = newUser.Email,
                 Role = newUser.Role,

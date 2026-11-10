@@ -19,6 +19,12 @@ namespace API.Data
             modelBuilder.Entity<TeamMember>().HasKey(tm => new { tm.TeamId, tm.UserId });
 
             modelBuilder
+                .Entity<User>()
+                .HasIndex(u => u.RefreshToken)
+                .IsUnique()
+                .HasFilter("[RefreshToken] IS NOT NULL");
+
+            modelBuilder
                 .Entity<TeamMember>()
                 .HasOne(tm => tm.Team)
                 .WithMany(t => t.Members)

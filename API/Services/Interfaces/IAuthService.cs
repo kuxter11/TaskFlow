@@ -7,6 +7,6 @@ namespace API.Services.Interfaces
     public interface IAuthService
     {
         Task<TokenResponseDto?> LoginAsync(LoginUserDto request);
-        Task<RegisterUserResponseDto?> RegisterAsync(RegisterUserDto request);
+        Task<UserResponseDto?> RegisterAsync(RegisterUserDto request);
     }
 }

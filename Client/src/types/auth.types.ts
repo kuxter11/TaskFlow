@@ -1,4 +1,4 @@
-import type { UserRole } from "./role.types";
+import type { User } from "./user.types";
 
 export type AuthMode = "login" | "register";
 
@@ -9,7 +9,7 @@ export interface LoginData {
 
 export interface LoginDataResponse {
   accessToken: string;
-  refreshToken: string;
+  user: User;
 }
 
 export interface RegisterData {
@@ -17,10 +17,4 @@ export interface RegisterData {
   email: string;
   password: string;
   confirmPassword: string;
-}
-
-export interface RegisterDataResponse {
-  username: string;
-  email: string;
-  userRole: UserRole;
 }

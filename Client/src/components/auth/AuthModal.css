@@ -141,38 +141,16 @@
   box-shadow: 0 0 0 3px rgba(124, 108, 240, 0.13);
 }
 
-/* Submit button */
-.auth-submit {
-  width: 100%;
-  margin-top: 8px;
-  padding: 14px;
-  border: none;
-  border-radius: 10px;
-  background: #6d5ce8;
-  color: #ffffff;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    transform 0.2s,
-    box-shadow 0.2s;
-}
-
-.auth-submit:hover {
-  background: #5947d5;
-  box-shadow: 0 5px 14px rgba(109, 92, 232, 0.25);
-  transform: translateY(-1px);
-}
-
-.auth-submit:active {
-  transform: translateY(0);
-}
-
 /* Keyboard accessibility */
 .auth-modal button:focus-visible {
   outline: 3px solid rgba(109, 92, 232, 0.35);
   outline-offset: 3px;
+}
+
+.auth-form-actions .app-button {
+  width: 100%;
+  padding: 14px 24px;
+  font-size: 16px;
 }
 
 /* Smaller screens */

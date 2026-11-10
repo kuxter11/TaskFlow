@@ -2,21 +2,21 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using API.Data;
-using API.Dtos.Auth;
 using API.Dtos.Auth.Response;
 using API.Entities;
+using API.Repositories.Interfaces;
 using API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.Services
 {
-    public class TokenService(AppDbContext context, IConfiguration configuration) : ITokenService
+    public class TokenService(IUserRepository userRepository, IConfiguration configuration)
+        : ITokenService
     {
-        public async Task<TokenResponseDto?> RefreshTokenAsync(RefreshTokenRequestDto request)
+        public async Task<TokenResponseDto?> RefreshTokenAsync(string refreshToken)
         {
-            var user = await ValidateRefreshTokenAsync(request.UserId, request.RefreshToken);
+            var user = await ValidateRefreshTokenAsync(refreshToken);
             if (user is null)
             {
                 return null;
@@ -31,22 +31,44 @@ namespace API.Services
             {
                 AccessToken = CreateToken(user),
                 RefreshToken = await GenerateAndSaveRefreshToken(user),
+                User = new UserResponseDto
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+                    Email = user.Email,
+                    Role = user.Role,
+                },
             };
         }
 
-        public async Task<User?> ValidateRefreshTokenAsync(Guid userId, string refreshToken)
+        public async Task<User?> ValidateRefreshTokenAsync(string refreshToken)
         {
-            var user = await context.Users.FirstAsync(u => u.Id == userId);
+            var user = await userRepository.GetByRefreshTokenAsync(refreshToken);
             if (
                 user is null
-                || user.RefreshToken != refreshToken
-                || user.RefreshTokenExpiryTime <= DateTime.Now
+                || user.RefreshTokenExpiryTime is null
+                || user.RefreshTokenExpiryTime <= DateTime.UtcNow
             )
             {
                 return null;
             }
 
             return user;
+        }
+
+        public async Task RevokeRefreshTokenAsync(string refreshToken)
+        {
+            var user = await userRepository.GetByRefreshTokenAsync(refreshToken);
+
+            if (user is null)
+            {
+                return;
+            }
+
+            user.RefreshToken = null;
+            user.RefreshTokenExpiryTime = null;
+
+            await userRepository.SaveChangesAsync();
         }
 
         public string GenerateRefreshToken()
@@ -60,9 +82,12 @@ namespace API.Services
         public async Task<String> GenerateAndSaveRefreshToken(User user)
         {
             var refreshToken = GenerateRefreshToken();
+
             user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
-            await context.SaveChangesAsync();
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+
+            await userRepository.SaveChangesAsync();
+
             return refreshToken;
         }
 
@@ -85,7 +110,7 @@ namespace API.Services
                 issuer: configuration.GetValue<string>("AppSettings:Issuer"),
                 audience: configuration.GetValue<string>("AppSettings:Audience"),
                 claims: claims,
-                expires: DateTime.Now.AddDays(1),
+                expires: DateTime.UtcNow.AddMinutes(15),
                 signingCredentials: creds
             );
 

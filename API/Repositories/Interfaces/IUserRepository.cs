@@ -6,5 +6,7 @@ namespace API.Repositories.Interfaces
     {
         Task<User?> GetByUsernameAsync(string username);
         Task AddAsync(User user);
+        Task<User?> GetByRefreshTokenAsync(string refreshToken);
+        Task SaveChangesAsync();
     }
 }

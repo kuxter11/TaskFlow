@@ -13,43 +13,105 @@ namespace API.Controllers
     public class AuthController(IAuthService authService, ITokenService tokenService)
         : ControllerBase
     {
-        [HttpPost("register")]
-        public async Task<ActionResult<RegisterUserResponseDto>> Register(RegisterUserDto dto)
-        {
-            var registeredUser = await authService.RegisterAsync(dto);
+        private const string RefreshTokenCookieName = "refreshToken";
 
-            if (registeredUser is null)
+        private CookieOptions GetRefreshTokenCookieOptions()
+        {
+            return new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Lax,
+                Path = "/api/auth",
+                Expires = DateTime.UtcNow.AddDays(7),
+            };
+        }
+
+        private void SetRefreshTokenCookie(string refreshToken)
+        {
+            Response.Cookies.Append(
+                RefreshTokenCookieName,
+                refreshToken,
+                GetRefreshTokenCookieOptions()
+            );
+        }
+
+        private void ClearRefreshTokenCookie()
+        {
+            Response.Cookies.Delete(RefreshTokenCookieName, GetRefreshTokenCookieOptions());
+        }
+
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<ActionResult<UserResponseDto>> Register(RegisterUserDto dto)
+        {
+            var result = await authService.RegisterAsync(dto);
+
+            if (result is null)
             {
                 return BadRequest("User already exists.");
             }
 
-            return Ok(registeredUser);
+            return Ok(result);
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult<TokenResponseDto>> Login(LoginUserDto dto)
+        public async Task<ActionResult<AuthResponseDto>> Login(LoginUserDto dto)
         {
             var result = await authService.LoginAsync(dto);
 
             if (result is null)
             {
-                return BadRequest("Invalid username or password.");
+                return Unauthorized("Invalid username or password.");
             }
 
-            return Ok(result);
+            SetRefreshTokenCookie(result.RefreshToken);
+
+            return Ok(new AuthResponseDto { AccessToken = result.AccessToken, User = result.User });
         }
 
-        [HttpPost("refresh-token")]
-        public async Task<ActionResult<TokenResponseDto>> RefreshToken(RefreshTokenRequestDto dto)
+        [AllowAnonymous]
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
         {
-            var result = await tokenService.RefreshTokenAsync(dto);
-
-            if (result is null || result.AccessToken is null || result.RefreshToken is null)
+            if (
+                Request.Cookies.TryGetValue(RefreshTokenCookieName, out var refreshToken)
+                && !string.IsNullOrWhiteSpace(refreshToken)
+            )
             {
-                return Unauthorized("Invalid refresh token.");
+                await tokenService.RevokeRefreshTokenAsync(refreshToken);
             }
 
-            return Ok(result);
+            ClearRefreshTokenCookie();
+
+            return NoContent();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("refresh-token")]
+        public async Task<ActionResult<AuthResponseDto>> RefreshToken()
+        {
+            if (
+                !Request.Cookies.TryGetValue(RefreshTokenCookieName, out var refreshToken)
+                || string.IsNullOrWhiteSpace(refreshToken)
+            )
+            {
+                ClearRefreshTokenCookie();
+                return Unauthorized("Refresh token is missing.");
+            }
+
+            var result = await tokenService.RefreshTokenAsync(refreshToken);
+
+            if (result is null)
+            {
+                ClearRefreshTokenCookie();
+                return Unauthorized("Invalid or expired refresh token.");
+            }
+
+            SetRefreshTokenCookie(result.RefreshToken);
+
+            return Ok(new AuthResponseDto { AccessToken = result.AccessToken, User = result.User });
         }
 
         [Authorize]

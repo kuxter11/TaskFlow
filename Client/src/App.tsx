@@ -1,8 +1,8 @@
 import { useState } from "react";
 import AuthModal from "./components/auth/AuthModal";
 import type { AuthMode } from "./types/auth.types";
-import Sidebar from "./components/auth/layout/Sidebar/Siderbar";
-import TopBar from "./components/auth/layout/TopBar/TopBar";
+import Sidebar from "./components/layout/Sidebar/Siderbar";
+import TopBar from "./components/layout/TopBar/TopBar";
 import "./App.css";
 
 function App() {
@@ -21,10 +21,7 @@ function App() {
       <Sidebar activeItem={activeItem} onNavigate={setActiveItem} />
 
       <div className="main-layout">
-        <TopBar
-          onLogin={() => openAuthModal("login")}
-          onRegister={() => openAuthModal("register")}
-        />
+        <TopBar onOpenAuth={openAuthModal} />
 
         <main className="app-content">
           <h1>{activeItem}</h1>

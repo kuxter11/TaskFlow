@@ -62,9 +62,6 @@ namespace API.Migrations
                     b.Property<DateTime>("JoinedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
                     b.HasKey("ProjectId", "UserId");
 
                     b.HasIndex("UserId");
@@ -134,7 +131,7 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RefreshToken")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("RefreshTokenExpiryTime")
                         .HasColumnType("datetime2");
@@ -147,6 +144,10 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RefreshToken")
+                        .IsUnique()
+                        .HasFilter("[RefreshToken] IS NOT NULL");
 
                     b.ToTable("Users");
                 });

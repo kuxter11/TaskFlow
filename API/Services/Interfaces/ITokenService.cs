@@ -10,7 +10,8 @@ namespace API.Services.Interfaces
         string GenerateRefreshToken();
         Task<string> GenerateAndSaveRefreshToken(User user);
         Task<TokenResponseDto> CreateTokenResponse(User user);
-        Task<User?> ValidateRefreshTokenAsync(Guid userId, string refreshToken);
-        Task<TokenResponseDto?> RefreshTokenAsync(RefreshTokenRequestDto request);
+        Task<User?> ValidateRefreshTokenAsync(string refreshToken);
+        Task<TokenResponseDto?> RefreshTokenAsync(string refreshToken);
+        Task RevokeRefreshTokenAsync(string refreshToken);
     }
 }

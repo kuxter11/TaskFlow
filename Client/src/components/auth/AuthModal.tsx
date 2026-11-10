@@ -2,7 +2,8 @@ import { useEffect, useRef, useState, type SyntheticEvent } from "react";
 
 import type { AuthMode } from "../../types/auth.types";
 import "./AuthModal.css";
-import { login, register } from "../../api/auth.api";
+import { useAuth } from "../../context/useAuth";
+import Button from "../common/Button";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ export default function AuthModal({
   initialMode,
   onClose,
 }: AuthModalProps) {
+  const { login, register } = useAuth();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const [mode, setMode] = useState<AuthMode>(initialMode);
@@ -39,6 +41,11 @@ export default function AuthModal({
     }
   }, [isOpen]);
 
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  };
+
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -47,23 +54,12 @@ export default function AuthModal({
 
     try {
       if (mode === "login") {
-        const result = await login({
-          username,
-          password,
-        });
-        console.log("Login successful", result);
+        await login({ username, password });
       } else {
-        const result = await register({
-          username,
-          email,
-          password,
-          confirmPassword,
-        });
-        console.log("Register successful", result);
+        await register({ username, email, password, confirmPassword });
       }
 
-      resetForm();
-      onClose();
+      handleClose();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -72,6 +68,7 @@ export default function AuthModal({
   };
 
   const switchMode = (newMode: AuthMode) => {
+    resetForm();
     setMode(newMode);
     setError("");
   };
@@ -85,10 +82,10 @@ export default function AuthModal({
   };
 
   return (
-    <dialog ref={dialogRef} className="auth-modal" onClose={onClose}>
+    <dialog ref={dialogRef} className="auth-modal" onClose={handleClose}>
       <button
         className="auth-close"
-        onClick={() => dialogRef.current?.close()}
+        onClick={() => handleClose()}
         type="button"
         aria-label="Close modal"
       >
@@ -165,7 +162,7 @@ export default function AuthModal({
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             required
-            minLength={8}
+            minLength={6}
           />
         </div>
 
@@ -191,13 +188,11 @@ export default function AuthModal({
           </div>
         )}
 
-        <button className="auth-submit" type="submit" disabled={isLoading}>
-          {isLoading
-            ? "Please wait..."
-            : mode === "login"
-              ? "Sign in"
-              : "Create account"}
-        </button>
+        <div className="auth-form-actions">
+          <Button type="submit" variant="primary" isLoading={isLoading}>
+            {mode === "login" ? "Login" : "Register"}
+          </Button>
+        </div>
       </form>
     </dialog>
   );

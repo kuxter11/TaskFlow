@@ -1,4 +1,5 @@
 using System.Text;
+using API.Enums;
 using API.Repositories;
 using API.Repositories.Interfaces;
 using API.Services;
@@ -20,6 +21,18 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<API.Data.AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AppDatabase"))
 );
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAuthenticatedUser", policy => policy.RequireAuthenticatedUser());
+
+    options.AddPolicy(
+        "RequireProjectManager ",
+        policy => policy.RequireRole(UserRole.ProjectManager.ToString(), UserRole.Admin.ToString())
+    );
+
+    options.AddPolicy("RequireAdmin", policy => policy.RequireRole(UserRole.Admin.ToString()));
+});
 
 builder
     .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -55,7 +68,11 @@ builder.Services.AddCors(options =>
         "Client",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod();
+            policy
+                .WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
         }
     );
 });
@@ -69,10 +86,11 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-app.UseCors("Client");
-
 app.UseHttpsRedirection();
 
+app.UseCors("Client");
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

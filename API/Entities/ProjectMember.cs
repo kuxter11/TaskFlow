@@ -10,7 +10,5 @@ namespace API.Entities
         public User User { get; set; } = null!;
 
         public DateTime JoinedAt { get; set; } = DateTime.UtcNow;
-
-        public ProjectRole Role { get; set; } = ProjectRole.Member;
     }
 }
