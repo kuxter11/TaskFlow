@@ -2,8 +2,9 @@ import { useEffect, useRef, useState, type SyntheticEvent } from "react";
 
 import type { AuthMode } from "../../types/auth.types";
 import "./AuthModal.css";
-import { useAuth } from "../../context/useAuth";
 import Button from "../common/Button";
+import { useAppDispatch } from "../../store/hooks";
+import { login, register } from "../../features/auth/authSlice";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -16,7 +17,7 @@ export default function AuthModal({
   initialMode,
   onClose,
 }: AuthModalProps) {
-  const { login, register } = useAuth();
+  const dispatch = useAppDispatch();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const [mode, setMode] = useState<AuthMode>(initialMode);
@@ -54,9 +55,11 @@ export default function AuthModal({
 
     try {
       if (mode === "login") {
-        await login({ username, password });
+        await dispatch(login({ username, password })).unwrap();
       } else {
-        await register({ username, email, password, confirmPassword });
+        await dispatch(
+          register({ username, email, password, confirmPassword }),
+        ).unwrap();
       }
 
       handleClose();

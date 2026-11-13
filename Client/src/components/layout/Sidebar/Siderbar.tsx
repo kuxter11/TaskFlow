@@ -1,32 +1,20 @@
-import {
-  LayoutDashboard,
-  Settings,
-  HelpCircle,
-  LogOut,
-  Folders,
-  UserGroup,
-  CalendarDays,
-  ChevronRight,
-  ChevronLeft,
-} from "lucide-react";
+import { HelpCircle, LogOut, ChevronRight, ChevronLeft } from "lucide-react";
 
 import "./Sidebar.css";
 import { useState } from "react";
+import { navigationItems, type PageId } from "../../../config/navigation";
 
 interface SidebarProps {
   activeItem: string;
-  onNavigate: (item: string) => void;
+  onNavigate: (item: PageId) => void;
+  onLogout: () => void;
 }
 
-const navigationItems = [
-  { label: "Dashboard", icon: LayoutDashboard },
-  { label: "Projects", icon: Folders },
-  { label: "Team", icon: UserGroup },
-  { label: "Calendar", icon: CalendarDays },
-  { label: "Settings", icon: Settings },
-];
-
-export default function Sidebar({ activeItem, onNavigate }: SidebarProps) {
+export default function Sidebar({
+  activeItem,
+  onNavigate,
+  onLogout,
+}: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const toggleSidebar = () => {
@@ -55,14 +43,14 @@ export default function Sidebar({ activeItem, onNavigate }: SidebarProps) {
       <nav className="sidebar-nav">
         {navigationItems.map((item) => {
           const Icon = item.icon;
-          const isActive = activeItem === item.label;
+          const isActive = activeItem === item.id;
 
           return (
             <button
-              key={item.label}
+              key={item.id}
               type="button"
               className={`sidebar-link ${isActive ? "active" : ""}`}
-              onClick={() => onNavigate(item.label)}
+              onClick={() => onNavigate(item.id)}
             >
               <Icon size={19} strokeWidth={1.8} />
               <span>{item.label}</span>
@@ -72,11 +60,7 @@ export default function Sidebar({ activeItem, onNavigate }: SidebarProps) {
       </nav>
 
       <div className="sidebar-bottom">
-        <button
-          type="button"
-          className="sidebar-link"
-          onClick={() => onNavigate("Help")}
-        >
+        <button type="button" className="sidebar-link">
           <HelpCircle size={19} />
           <span>Help & Support</span>
         </button>
@@ -84,7 +68,7 @@ export default function Sidebar({ activeItem, onNavigate }: SidebarProps) {
         <button
           type="button"
           className="sidebar-link logout-link"
-          onClick={() => onNavigate("Logout")}
+          onClick={onLogout}
         >
           <LogOut size={19} />
           <span>Log out</span>

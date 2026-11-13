@@ -7,42 +7,38 @@ namespace API.Services
 {
     public class ProjectService(IProjectRepository projectRepository) : IProjectService
     {
-        public async Task<ProjectResponseDto> CreateProjectAsync(CreateProjectDto projectDto)
+        public async Task<ProjectResponseDto> CreateProjectAsync(
+            CreateProjectDto projectDto,
+            Guid userId
+        )
         {
             var project = new Project
             {
                 Name = projectDto.Name,
-                Description = projectDto.Description,
-                CreatedBy = projectDto.CreatedBy,
+                Description = projectDto.Description ?? string.Empty,
+                CreatedBy = userId,
                 CreatedAt = DateTime.UtcNow,
             };
+            project.Members.Add(new ProjectMember { UserId = userId, JoinedAt = DateTime.UtcNow });
+
             await projectRepository.AddAsync(project);
+
             return new ProjectResponseDto
             {
                 Id = project.Id,
                 Name = project.Name,
                 Description = project.Description,
+                CreatedBy = project.CreatedBy,
+                CreatedAt = project.CreatedAt,
             };
         }
 
-        public async Task<ProjectResponseDto> GetProjectByIdAsync(int id)
+        public async Task<List<ProjectResponseDto>> GetProjectsAsync(Guid userId, bool isAdmin)
         {
-            var project = await projectRepository.GetByIdAsync(id);
-            if (project == null)
-            {
-                throw new Exception("Project not found");
-            }
-            return new ProjectResponseDto
-            {
-                Id = project.Id,
-                Name = project.Name,
-                Description = project.Description,
-            };
-        }
+            var projects = isAdmin
+                ? await projectRepository.GetAllAsync()
+                : await projectRepository.GetProjectsByUserIdAsync(userId);
 
-        public async Task<List<ProjectResponseDto>> GetAllProjectsAsync()
-        {
-            var projects = await projectRepository.GetAllAsync();
             return projects
                 .Select(p => new ProjectResponseDto
                 {
@@ -53,6 +49,34 @@ namespace API.Services
                     CreatedAt = p.CreatedAt,
                 })
                 .ToList();
+        }
+
+        public async Task<ProjectResponseDto?> GetProjectByIdAsync(
+            int id,
+            Guid userId,
+            bool isAdmin
+        )
+        {
+            var project = await projectRepository.GetByIdAsync(id);
+
+            if (project == null)
+                return null;
+
+            // Admins can access every project.
+            // Other users must be project members.
+            if (!isAdmin && !project.Members.Any(m => m.UserId == userId))
+            {
+                return null;
+            }
+
+            return new ProjectResponseDto
+            {
+                Id = project.Id,
+                Name = project.Name,
+                Description = project.Description,
+                CreatedBy = project.CreatedBy,
+                CreatedAt = project.CreatedAt,
+            };
         }
     }
 }
