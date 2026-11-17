@@ -2,19 +2,14 @@ import { HelpCircle, LogOut, ChevronRight, ChevronLeft } from "lucide-react";
 
 import "./Sidebar.css";
 import { useState } from "react";
-import { navigationItems, type PageId } from "../../../config/navigation";
+import { navigationItems } from "../../../config/navigation";
+import { NavLink } from "react-router";
 
 interface SidebarProps {
-  activeItem: string;
-  onNavigate: (item: PageId) => void;
   onLogout: () => void;
 }
 
-export default function Sidebar({
-  activeItem,
-  onNavigate,
-  onLogout,
-}: SidebarProps) {
+export default function Sidebar({ onLogout }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const toggleSidebar = () => {
@@ -43,18 +38,18 @@ export default function Sidebar({
       <nav className="sidebar-nav">
         {navigationItems.map((item) => {
           const Icon = item.icon;
-          const isActive = activeItem === item.id;
 
           return (
-            <button
-              key={item.id}
-              type="button"
-              className={`sidebar-link ${isActive ? "active" : ""}`}
-              onClick={() => onNavigate(item.id)}
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active" : ""}`
+              }
             >
               <Icon size={19} strokeWidth={1.8} />
               <span>{item.label}</span>
-            </button>
+            </NavLink>
           );
         })}
       </nav>

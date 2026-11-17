@@ -26,6 +26,13 @@
   border-radius: 12px;
   min-width: 0;
   overflow: hidden;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.project-card:hover {
+  border-color: #6d5ce8;
 }
 
 .project-card h3,

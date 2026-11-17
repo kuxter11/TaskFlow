@@ -6,6 +6,7 @@ import Button from "../../common/Button";
 import { FolderOpen, Plus } from "lucide-react";
 import "./Projects.css";
 import CreateProjectModal from "./CreateProjectModal";
+import { Link } from "react-router";
 
 export default function Projects() {
   const dispatch = useAppDispatch();
@@ -51,10 +52,14 @@ export default function Projects() {
       ) : (
         <div className="projects-list">
           {projects.map((project) => (
-            <div key={project.id} className="project-card">
+            <Link
+              key={project.id}
+              to={`/projects/${project.id}`}
+              className="project-card"
+            >
               <h3>{project.name}</h3>
               <p>{project.description}</p>
-            </div>
+            </Link>
           ))}
         </div>
       )}

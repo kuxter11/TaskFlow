@@ -1,18 +1,16 @@
 import { useState } from "react";
 
-import TopBar from "./components/layout/TopBar/TopBar";
 import AuthModal from "./components/auth/AuthModal";
 
-import { Page, type PageId } from "./config/navigation";
-
-import { useAppDispatch, useAppSelector } from "./store/hooks";
-import { logout } from "./features/auth/authSlice";
+import { useAppSelector } from "./store/hooks";
 
 import "./App.css";
 import type { AuthMode } from "./types/auth.types";
 import Projects from "./components/pages/Projects/Projects";
-import Sidebar from "./components/layout/Sidebar/Siderbar";
 import LandingPage from "./components/landing/LandingPage";
+import { Navigate, Route, Routes } from "react-router";
+import Layout from "./components/layout/Layout";
+import ProjectBoard from "./components/pages/ProjectBoard/ProjectBoard";
 
 function App() {
   const isAuthenticated = useAppSelector((state) => state.auth.user !== null);
@@ -22,36 +20,9 @@ function App() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<AuthMode>("login");
 
-  const [activeItem, setActiveItem] = useState<PageId>(Page.Dashboard);
-
-  const dispatch = useAppDispatch();
-
   const openAuthModal = (mode: AuthMode) => {
     setAuthMode(mode);
     setIsAuthOpen(true);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await dispatch(logout()).unwrap();
-      setActiveItem(Page.Dashboard);
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
-
-  // Maps navigation IDs to their corresponding page components.
-  const pages: Partial<Record<PageId, React.ReactNode>> = {
-    [Page.Dashboard]: (
-      <>
-        <h1>Dashboard</h1>
-        <p>Your dashboard content goes here.</p>
-      </>
-    ),
-    [Page.Projects]: <Projects />,
-    [Page.Team]: <h1>Team</h1>,
-    [Page.Calendar]: <h1>Calendar</h1>,
-    [Page.Settings]: <h1>Settings</h1>,
   };
 
   if (isInitializing) {
@@ -74,20 +45,27 @@ function App() {
   }
 
   return (
-    <div className="app-layout">
-      <Sidebar
-        activeItem={activeItem}
-        onNavigate={setActiveItem}
-        onLogout={handleLogout}
-      />
-
-      <div className="main-layout">
-        <TopBar onOpenAuth={openAuthModal} />
-
-        <main className="app-content">
-          {pages[activeItem] ?? <h1>Page not found</h1>}
-        </main>
-      </div>
+    <>
+      <Routes>
+        <Route element={<Layout onOpenAuth={openAuthModal} />}>
+          <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route
+            path="dashboard"
+            element={
+              <>
+                <h1>Dashboard</h1>
+                <p>Your dashboard content goes here.</p>
+              </>
+            }
+          />
+          <Route path="projects" element={<Projects />} />
+          <Route path="projects/:projectId" element={<ProjectBoard />} />
+          <Route path="team" element={<h1>Team</h1>} />
+          <Route path="calendar" element={<h1>Calendar</h1>} />
+          <Route path="settings" element={<h1>Settings</h1>} />
+          <Route path="*" element={<h1>Page not found</h1>} />
+        </Route>
+      </Routes>
 
       <AuthModal
         key={authMode}
@@ -95,7 +73,7 @@ function App() {
         initialMode={authMode}
         onClose={() => setIsAuthOpen(false)}
       />
-    </div>
+    </>
   );
 }
 
