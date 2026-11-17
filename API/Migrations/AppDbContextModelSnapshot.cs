@@ -69,6 +69,44 @@ namespace API.Migrations
                     b.ToTable("ProjectMembers");
                 });
 
+            modelBuilder.Entity("API.Entities.ProjectTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("ProjectTasks");
+                });
+
             modelBuilder.Entity("API.Entities.Team", b =>
                 {
                     b.Property<int>("Id")
@@ -180,6 +218,23 @@ namespace API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("API.Entities.ProjectTask", b =>
+                {
+                    b.HasOne("API.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.Project", "Project")
+                        .WithMany("Tasks")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+                });
+
             modelBuilder.Entity("API.Entities.Team", b =>
                 {
                     b.HasOne("API.Entities.User", null)
@@ -211,6 +266,8 @@ namespace API.Migrations
             modelBuilder.Entity("API.Entities.Project", b =>
                 {
                     b.Navigation("Members");
+
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("API.Entities.Team", b =>

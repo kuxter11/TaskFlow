@@ -11,9 +11,7 @@ import { Link } from "react-router";
 export default function Projects() {
   const dispatch = useAppDispatch();
 
-  const { projects, isLoading, error } = useAppSelector(
-    (state) => state.projects,
-  );
+  const { projects, isLoading } = useAppSelector((state) => state.projects);
 
   const user = useAppSelector((state) => state.auth.user);
 
@@ -41,8 +39,6 @@ export default function Projects() {
 
       {isLoading ? (
         <p>Loading projects...</p>
-      ) : error ? (
-        <p>Error: {error}</p>
       ) : projects.length === 0 ? (
         <div className="empty-projects">
           <FolderOpen size={110} strokeWidth={1.2} />

@@ -3,10 +3,15 @@ import { Link, useParams } from "react-router";
 import { isAxiosError } from "axios";
 import { getProjectById } from "../../../api/projects.api";
 import type { Project } from "../../../types/project.types";
+import type { ProjectTask } from "../../../types/task.types";
+import "./ProjectBoard.css";
+import { getTasks } from "../../../api/tasks.api";
+import BoardView from "./BoardView";
 
 interface LoadResult {
   projectId: number;
   project: Project | null;
+  tasks: ProjectTask[];
   error: string | null;
 }
 
@@ -21,9 +26,12 @@ export default function ProjectBoard() {
 
     let ignore = false;
 
-    getProjectById(id)
-      .then((project) => {
-        if (!ignore) setResult({ projectId: id, project, error: null });
+    Promise.all([
+      getProjectById(id, { skipErrorToast: true }),
+      getTasks(id, { skipErrorToast: true }),
+    ])
+      .then(([project, tasks]) => {
+        if (!ignore) setResult({ projectId: id, project, tasks, error: null });
       })
       .catch((err) => {
         if (ignore) return;
@@ -33,6 +41,7 @@ export default function ProjectBoard() {
         setResult({
           projectId: id,
           project: null,
+          tasks: [],
           error: notFound
             ? "Project not found, or you don't have access to it."
             : "Failed to load project.",
@@ -63,10 +72,6 @@ export default function ProjectBoard() {
   }
 
   return (
-    <div>
-      <h1>{result.project.name}</h1>
-      <p>{result.project.description}</p>
-      {/* the board columns will go here later */}
-    </div>
+    <BoardView key={id} project={result.project} initialTasks={result.tasks} />
   );
 }

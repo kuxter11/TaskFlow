@@ -10,6 +10,7 @@ namespace API.Data
         public DbSet<TeamMember> TeamMembers { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectMember> ProjectMembers { get; set; }
+        public DbSet<ProjectTask> ProjectTasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -68,6 +69,23 @@ namespace API.Data
                 .HasOne(pm => pm.User)
                 .WithMany(u => u.ProjectMemberships)
                 .HasForeignKey(pm => pm.UserId);
+
+            // ProjectTask - Project (one-to-many)
+            modelBuilder
+                .Entity<ProjectTask>()
+                .HasOne(t => t.Project)
+                .WithMany(p => p.Tasks)
+                .HasForeignKey(t => t.ProjectId);
+
+            // ProjectTask - Creator (User)
+            modelBuilder
+                .Entity<ProjectTask>()
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey(t => t.CreatedBy)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ProjectTask>().Property(t => t.Title).HasMaxLength(200);
         }
     }
 }

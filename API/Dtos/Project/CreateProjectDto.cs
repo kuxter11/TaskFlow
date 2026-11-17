@@ -4,7 +4,8 @@ namespace API.Dtos.Project
 {
     public class CreateProjectDto
     {
-        [Required]
+        [Required(AllowEmptyStrings = false)]
+        [RegularExpression(@".*\S.*", ErrorMessage = "Name cannot be empty.")]
         [MinLength(3)]
         [MaxLength(50)]
         public string Name { get; set; } = string.Empty;

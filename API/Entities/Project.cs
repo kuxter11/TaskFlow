@@ -13,5 +13,6 @@ namespace API.Entities
         public Guid CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public ICollection<ProjectMember> Members { get; set; } = new List<ProjectMember>();
+        public ICollection<ProjectTask> Tasks { get; set; } = new List<ProjectTask>();
     }
 }

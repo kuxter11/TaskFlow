@@ -5,6 +5,7 @@ import {
   getProjects as getProjectsApi,
   createProject as createProjectApi,
 } from "../../api/projects.api";
+import { isAxiosError } from "axios";
 
 interface ProjectsState {
   projects: Project[];
@@ -41,7 +42,9 @@ export const addProject = createAsyncThunk<
     return await createProjectApi(data);
   } catch (error) {
     return rejectWithValue(
-      error instanceof Error ? error.message : "Failed to create project",
+      isAxiosError(error) && error.response?.status === 400
+        ? "Please check the project name (3-50 characters) and try again."
+        : "Failed to create project.",
     );
   }
 });

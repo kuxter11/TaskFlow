@@ -31,5 +31,17 @@ namespace API.Repositories
         {
             return await context.Projects.ToListAsync();
         }
+
+        public async Task<bool> IsMemberAsync(int projectId, Guid userId)
+        {
+            return await context.ProjectMembers.AnyAsync(m =>
+                m.ProjectId == projectId && m.UserId == userId
+            );
+        }
+
+        public async Task<bool> ExistsAsync(int projectId)
+        {
+            return await context.Projects.AnyAsync(p => p.Id == projectId);
+        }
     }
 }

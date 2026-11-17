@@ -8,5 +8,7 @@ namespace API.Repositories.Interfaces
         Task<List<Project>> GetProjectsByUserIdAsync(Guid userId);
         Task<Project?> GetByIdAsync(int id);
         Task<List<Project>> GetAllAsync();
+        Task<bool> IsMemberAsync(int projectId, Guid userId);
+        Task<bool> ExistsAsync(int projectId);
     }
 }

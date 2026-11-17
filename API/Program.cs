@@ -65,6 +65,9 @@ builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
+builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(

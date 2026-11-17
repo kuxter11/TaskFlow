@@ -1,5 +1,6 @@
 import api from "./axios";
 import type { Project, CreateProjectData } from "../types/project.types";
+import type { AxiosRequestConfig } from "axios";
 
 export async function getProjects(): Promise<Project[]> {
   const response = await api.get<Project[]>("/Project");
@@ -7,8 +8,11 @@ export async function getProjects(): Promise<Project[]> {
   return response.data;
 }
 
-export async function getProjectById(id: number): Promise<Project> {
-  const response = await api.get<Project>(`/Project/${id}`);
+export async function getProjectById(
+  id: number,
+  config?: AxiosRequestConfig,
+): Promise<Project> {
+  const response = await api.get<Project>(`/Project/${id}`, config);
 
   return response.data;
 }
