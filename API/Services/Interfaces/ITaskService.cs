@@ -18,7 +18,7 @@ namespace API.Services.Interfaces
             Guid userId,
             bool isAdmin
         );
-        Task<TaskResponseDto?> UpdateTaskAsync(
+        Task<TaskUpdateResult> UpdateTaskAsync(
             int projectId,
             int taskId,
             UpdateTaskDto dto,

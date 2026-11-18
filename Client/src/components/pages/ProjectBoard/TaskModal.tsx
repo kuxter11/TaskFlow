@@ -5,9 +5,12 @@ import "../Projects/CreateProjectModal.css";
 import Button from "../../common/Button";
 import { updateTask } from "../../../api/tasks.api";
 import { ProjectTaskStatus, type ProjectTask } from "../../../types/task.types";
+import type { ProjectMember } from "../../../types/project.types";
+import { useAppSelector } from "../../../store/hooks";
 
 interface TaskModalProps {
   task: ProjectTask;
+  members: ProjectMember[];
   onClose: () => void;
   onUpdated: (task: ProjectTask) => void;
 }
@@ -20,14 +23,23 @@ const statusOptions = [
 
 export default function TaskModal({
   task,
+  members,
   onClose,
   onUpdated,
 }: TaskModalProps) {
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
   const [status, setStatus] = useState<ProjectTaskStatus>(task.status);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const currentUserId = useAppSelector((state) => state.auth.user?.id);
+  const [assigneeId, setAssigneeId] = useState(task.assigneeId ?? "");
+
+  const canAssignToMe =
+    currentUserId !== undefined &&
+    members.some((m) => m.userId === currentUserId);
 
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,13 +52,17 @@ export default function TaskModal({
         title: title.trim(),
         description: description.trim(),
         status,
+        assigneeId,
       });
 
       onUpdated(updated);
       onClose();
     } catch (err) {
       if (isAxiosError(err) && err.response?.status === 400) {
-        setError("Please check the task title and try again.");
+        setError(
+          err.response.data?.message ??
+            "Please check the task title and try again.",
+        );
       }
     } finally {
       setIsSubmitting(false);
@@ -111,6 +127,30 @@ export default function TaskModal({
                 </option>
               ))}
             </select>
+
+            <label htmlFor="edit-task-assignee">Assignee</label>
+            <select
+              id="edit-task-assignee"
+              value={assigneeId}
+              onChange={(event) => setAssigneeId(event.target.value)}
+            >
+              <option value="">Unassigned</option>
+              {members.map((member) => (
+                <option key={member.userId} value={member.userId}>
+                  {member.username}
+                </option>
+              ))}
+            </select>
+
+            {canAssignToMe && assigneeId !== currentUserId && (
+              <button
+                type="button"
+                className="assign-to-me"
+                onClick={() => setAssigneeId(currentUserId)}
+              >
+                Assign to me
+              </button>
+            )}
           </div>
 
           {error && <p className="modal-error">{error}</p>}

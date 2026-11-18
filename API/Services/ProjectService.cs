@@ -78,5 +78,24 @@ namespace API.Services
                 CreatedAt = project.CreatedAt,
             };
         }
+
+        public async Task<bool> CanAccessAsync(int projectId, Guid userId, bool isAdmin)
+        {
+            return isAdmin
+                ? await projectRepository.ExistsAsync(projectId)
+                : await projectRepository.IsMemberAsync(projectId, userId);
+        }
+
+        public async Task<List<ProjectMemberDto>?> GetMembersAsync(
+            int projectId,
+            Guid userId,
+            bool isAdmin
+        )
+        {
+            if (!await CanAccessAsync(projectId, userId, isAdmin))
+                return null;
+
+            return await projectRepository.GetMembersAsync(projectId);
+        }
     }
 }

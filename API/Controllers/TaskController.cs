@@ -1,4 +1,5 @@
 ﻿using API.Dtos.Task;
+using API.Services;
 using API.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -64,7 +65,7 @@ namespace API.Controllers
             UpdateTaskDto dto
         )
         {
-            var task = await taskService.UpdateTaskAsync(
+            var result = await taskService.UpdateTaskAsync(
                 projectId,
                 taskId,
                 dto,
@@ -72,7 +73,13 @@ namespace API.Controllers
                 currentUser.IsAdmin
             );
 
-            return task is null ? NotFound() : Ok(task);
+            if (result.Error == TaskUpdateError.NotFound)
+                return NotFound();
+
+            if (result.Error == TaskUpdateError.InvalidAssignee)
+                return BadRequest(new { message = "Assignee must be a member of the project." });
+
+            return Ok(result.Task);
         }
     }
 }

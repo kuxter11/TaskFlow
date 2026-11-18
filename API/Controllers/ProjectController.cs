@@ -47,5 +47,17 @@ namespace API.Controllers
 
             return Ok(projects);
         }
+
+        [HttpGet("{id:int}/members")]
+        public async Task<ActionResult<List<ProjectMemberDto>>> GetMembers(int id)
+        {
+            var members = await projectService.GetMembersAsync(
+                id,
+                currentUser.UserId,
+                currentUser.IsAdmin
+            );
+
+            return members is null ? NotFound() : Ok(members);
+        }
     }
 }

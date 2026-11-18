@@ -1,4 +1,5 @@
 ﻿using API.Data;
+using API.Dtos.Project;
 using API.Entities;
 using API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,19 @@ namespace API.Repositories
         public async Task<List<Project>> GetAllAsync()
         {
             return await context.Projects.ToListAsync();
+        }
+
+        public async Task<List<ProjectMemberDto>> GetMembersAsync(int projectId)
+        {
+            return await (
+                from m in context.ProjectMembers
+                join u in context.Users on m.UserId equals u.Id
+                where m.ProjectId == projectId
+                orderby u.Username
+                select new ProjectMemberDto { UserId = u.Id, Username = u.Username }
+            )
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<bool> IsMemberAsync(int projectId, Guid userId)

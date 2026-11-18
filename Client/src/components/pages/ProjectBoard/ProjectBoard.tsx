@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { isAxiosError } from "axios";
-import { getProjectById } from "../../../api/projects.api";
-import type { Project } from "../../../types/project.types";
+import { getProjectById, getProjectMembers } from "../../../api/projects.api";
+import type { Project, ProjectMember } from "../../../types/project.types";
 import type { ProjectTask } from "../../../types/task.types";
 import "./ProjectBoard.css";
 import { getTasks } from "../../../api/tasks.api";
@@ -12,6 +12,7 @@ interface LoadResult {
   projectId: number;
   project: Project | null;
   tasks: ProjectTask[];
+  members: ProjectMember[];
   error: string | null;
 }
 
@@ -29,9 +30,11 @@ export default function ProjectBoard() {
     Promise.all([
       getProjectById(id, { skipErrorToast: true }),
       getTasks(id, { skipErrorToast: true }),
+      getProjectMembers(id, { skipErrorToast: true }),
     ])
-      .then(([project, tasks]) => {
-        if (!ignore) setResult({ projectId: id, project, tasks, error: null });
+      .then(([project, tasks, members]) => {
+        if (!ignore)
+          setResult({ projectId: id, project, tasks, members, error: null });
       })
       .catch((err) => {
         if (ignore) return;
@@ -42,6 +45,7 @@ export default function ProjectBoard() {
           projectId: id,
           project: null,
           tasks: [],
+          members: [],
           error: notFound
             ? "Project not found, or you don't have access to it."
             : "Failed to load project.",
@@ -72,6 +76,11 @@ export default function ProjectBoard() {
   }
 
   return (
-    <BoardView key={id} project={result.project} initialTasks={result.tasks} />
+    <BoardView
+      key={id}
+      project={result.project}
+      initialTasks={result.tasks}
+      members={result.members}
+    />
   );
 }

@@ -14,5 +14,6 @@ namespace API.Entities
 
         public Guid CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public Guid? AssigneeId { get; set; }
     }
 }

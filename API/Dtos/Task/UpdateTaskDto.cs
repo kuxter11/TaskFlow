@@ -14,5 +14,6 @@ namespace API.Dtos.Task
 
         [EnumDataType(typeof(ProjectTaskStatus))]
         public ProjectTaskStatus Status { get; set; }
+        public Guid? AssigneeId { get; set; }
     }
 }

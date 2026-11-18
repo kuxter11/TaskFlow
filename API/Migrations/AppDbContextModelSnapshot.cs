@@ -77,6 +77,9 @@ namespace API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<Guid?>("AssigneeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -99,6 +102,8 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AssigneeId");
 
                     b.HasIndex("CreatedBy");
 
@@ -220,6 +225,11 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Entities.ProjectTask", b =>
                 {
+                    b.HasOne("API.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("AssigneeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("API.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("CreatedBy")

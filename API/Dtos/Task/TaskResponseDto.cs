@@ -11,5 +11,6 @@ namespace API.Dtos.Task
         public ProjectTaskStatus Status { get; set; }
         public Guid CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
+        public Guid? AssigneeId { get; set; }
     }
 }

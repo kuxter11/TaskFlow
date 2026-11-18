@@ -5,23 +5,16 @@ using API.Services.Interfaces;
 
 namespace API.Services
 {
-    public class TaskService(ITaskRepository taskRepository, IProjectRepository projectRepository)
+    public class TaskService(ITaskRepository taskRepository, IProjectService projectService)
         : ITaskService
     {
-        private async Task<bool> CanAccessProjectAsync(int projectId, Guid userId, bool isAdmin)
-        {
-            return isAdmin
-                ? await projectRepository.ExistsAsync(projectId)
-                : await projectRepository.IsMemberAsync(projectId, userId);
-        }
-
         public async Task<List<TaskResponseDto>?> GetTasksAsync(
             int projectId,
             Guid userId,
             bool isAdmin
         )
         {
-            if (!await CanAccessProjectAsync(projectId, userId, isAdmin))
+            if (!await projectService.CanAccessAsync(projectId, userId, isAdmin))
                 return null;
 
             var tasks = await taskRepository.GetByProjectIdAsync(projectId);
@@ -35,7 +28,7 @@ namespace API.Services
             bool isAdmin
         )
         {
-            if (!await CanAccessProjectAsync(projectId, userId, isAdmin))
+            if (!await projectService.CanAccessAsync(projectId, userId, isAdmin))
                 return null;
 
             var task = new ProjectTask
@@ -58,7 +51,7 @@ namespace API.Services
             bool isAdmin
         )
         {
-            if (!await CanAccessProjectAsync(projectId, userId, isAdmin))
+            if (!await projectService.CanAccessAsync(projectId, userId, isAdmin))
                 return null;
 
             var task = await taskRepository.GetByIdAsync(projectId, taskId);
@@ -71,7 +64,7 @@ namespace API.Services
             return ToDto(task);
         }
 
-        public async Task<TaskResponseDto?> UpdateTaskAsync(
+        public async Task<TaskUpdateResult> UpdateTaskAsync(
             int projectId,
             int taskId,
             UpdateTaskDto dto,
@@ -79,20 +72,28 @@ namespace API.Services
             bool isAdmin
         )
         {
-            if (!await CanAccessProjectAsync(projectId, userId, isAdmin))
-                return null;
+            if (!await projectService.CanAccessAsync(projectId, userId, isAdmin))
+                return new TaskUpdateResult(null, TaskUpdateError.NotFound);
 
             var task = await taskRepository.GetByIdAsync(projectId, taskId);
             if (task is null)
-                return null;
+                return new TaskUpdateResult(null, TaskUpdateError.NotFound);
+
+            if (
+                dto.AssigneeId is Guid asigneeId
+                && asigneeId != task.AssigneeId
+                && !await projectService.CanAccessAsync(projectId, asigneeId, isAdmin)
+            )
+                return new TaskUpdateResult(null, TaskUpdateError.InvalidAssignee);
 
             task.Title = dto.Title.Trim();
             task.Description = dto.Description?.Trim() ?? string.Empty;
             task.Status = dto.Status;
+            task.AssigneeId = dto.AssigneeId;
 
             await taskRepository.SaveChangesAsync();
 
-            return ToDto(task);
+            return new TaskUpdateResult(ToDto(task), TaskUpdateError.None);
         }
 
         private static TaskResponseDto ToDto(ProjectTask t) =>
@@ -105,6 +106,7 @@ namespace API.Services
                 Status = t.Status,
                 CreatedBy = t.CreatedBy,
                 CreatedAt = t.CreatedAt,
+                AssigneeId = t.AssigneeId,
             };
     }
 }

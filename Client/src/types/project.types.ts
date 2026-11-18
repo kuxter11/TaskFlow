@@ -10,3 +10,8 @@ export interface CreateProjectData {
   name: string;
   description: string;
 }
+
+export interface ProjectMember {
+  userId: string;
+  username: string;
+}

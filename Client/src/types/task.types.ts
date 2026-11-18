@@ -1,8 +1,16 @@
 export const ProjectTaskStatus = {
   ToDo: 1,
   InProgress: 2,
-  Done: 3,
+  Testing: 3,
+  Done: 4,
 } as const;
+
+export const taskStatuses = [
+  { status: ProjectTaskStatus.ToDo, title: "To Do" },
+  { status: ProjectTaskStatus.InProgress, title: "In Progress" },
+  { status: ProjectTaskStatus.Testing, title: "Testing" },
+  { status: ProjectTaskStatus.Done, title: "Done" },
+];
 
 export type ProjectTaskStatus =
   (typeof ProjectTaskStatus)[keyof typeof ProjectTaskStatus];
@@ -15,6 +23,7 @@ export interface ProjectTask {
   status: ProjectTaskStatus;
   createdBy: string;
   createdAt: string;
+  assigneeId: string | null;
 }
 
 export interface CreateTaskData {
@@ -26,4 +35,5 @@ export interface UpdateTaskData {
   title: string;
   description: string;
   status: ProjectTaskStatus;
+  assigneeId: string | null;
 }

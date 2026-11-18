@@ -8,5 +8,7 @@ namespace API.Services.Interfaces
         Task<List<ProjectResponseDto>> GetProjectsAsync(Guid userId, bool isAdmin);
 
         Task<ProjectResponseDto?> GetProjectByIdAsync(int id, Guid userId, bool isAdmin);
+        Task<bool> CanAccessAsync(int projectId, Guid userId, bool isAdmin);
+        Task<List<ProjectMemberDto>?> GetMembersAsync(int projectId, Guid userId, bool isAdmin);
     }
 }

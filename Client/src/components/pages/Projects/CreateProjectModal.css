@@ -113,3 +113,18 @@
   font: inherit;
   font-size: 14px;
 }
+
+.assign-to-me {
+  align-self: flex-start;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #6d5ce8;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.assign-to-me:hover {
+  text-decoration: underline;
+}

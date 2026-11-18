@@ -86,6 +86,14 @@ namespace API.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ProjectTask>().Property(t => t.Title).HasMaxLength(200);
+
+            // ProjectTask - Assignee (User), optional
+            modelBuilder
+                .Entity<ProjectTask>()
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey(t => t.AssigneeId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
