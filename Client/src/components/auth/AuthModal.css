@@ -147,12 +147,6 @@
   outline-offset: 3px;
 }
 
-.auth-form-actions .app-button {
-  width: 100%;
-  padding: 14px 24px;
-  font-size: 16px;
-}
-
 /* Smaller screens */
 @media (max-width: 480px) {
   .auth-modal {

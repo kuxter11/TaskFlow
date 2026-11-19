@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchProjects } from "@/features/projects/projectsSlice";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { UserRole } from "@/types/role.types";
-import Button from "@/components/common/Button";
+import Button from "@/components/ui/Button/Button";
 import { FolderOpen, Plus } from "lucide-react";
 import "./Projects.css";
 import CreateProjectModal from "./CreateProjectModal";

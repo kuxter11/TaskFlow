@@ -1,40 +1,40 @@
-import { logout } from "@/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import Button from "@/components/ui/Button/Button";
 import type { AuthMode } from "@/types/auth.types";
-import Button from "@/components/common/Button";
-import "./TopBar.css";
+import type { User } from "@/types/user.types";
+import styles from "./TopBar.module.css";
+
 interface TopBarProps {
+  user: User | null;
+  isInitializing: boolean;
+  onLogout: () => void;
   onOpenAuth: (mode: AuthMode) => void;
 }
 
-export default function TopBar({ onOpenAuth }: TopBarProps) {
-  const dispatch = useAppDispatch();
-
-  const user = useAppSelector((state) => state.auth.user);
-  const isAuthenticated = user !== null;
-  const isInitializing = useAppSelector((state) => state.auth.isInitializing);
-
-  const handleLogout = async () => {
-    try {
-      await dispatch(logout()).unwrap();
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
+export default function TopBar({
+  user,
+  isInitializing,
+  onLogout,
+  onOpenAuth,
+}: TopBarProps) {
+  if (isInitializing) {
+    return (
+      <header className={styles.topbar}>
+        <div className={styles.loading}>Loading...</div>
+      </header>
+    );
+  }
 
   return (
-    <header className="topbar">
-      {isInitializing ? (
-        <div className="topbar-loading">Loading...</div>
-      ) : isAuthenticated && user ? (
-        <div className="topbar-profile">
-          <span className="username">{user.username}</span>
-          <Button variant="secondary" onClick={handleLogout}>
+    <header className={styles.topbar}>
+      {user ? (
+        <div>
+          <span className={styles.username}>{user.username}</span>
+          <Button variant="secondary" onClick={onLogout}>
             Log out
           </Button>
         </div>
       ) : (
-        <div className="topbar-auth">
+        <div className={styles.auth}>
           <Button variant="primary" onClick={() => onOpenAuth("login")}>
             Login
           </Button>

@@ -1,22 +1,28 @@
 import { useState } from "react";
-import { Navigate, Route, Routes } from "react-router";
+import { Navigate, Route, Routes, useNavigate } from "react-router";
 
-import { useAppSelector } from "./hooks";
+import { useAppDispatch, useAppSelector } from "./hooks";
+import { logout } from "@/features/auth/authSlice";
 import type { AuthMode } from "@/types/auth.types";
 
+// Import order = CSS order: Layout's base page typography must load
+// before the page components' CSS so page styles keep winning.
 import AuthModal from "@/components/auth/AuthModal";
-import LandingPage from "@/components/landing/LandingPage";
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/Layout/Layout";
 import Projects from "@/components/pages/Projects/Projects";
+import LandingPage from "@/components/landing/LandingPage";
 import ProjectBoard from "@/components/pages/ProjectBoard/ProjectBoard";
 import ProjectLayout from "@/components/pages/ProjectLayout/ProjectLayout";
 import ProjectMembers from "@/components/pages/ProjectMembers/ProjectMembers";
 
-import "./App.css";
 import styles from "./App.module.css";
 
 function App() {
-  const isAuthenticated = useAppSelector((state) => state.auth.user !== null);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const user = useAppSelector((state) => state.auth.user);
+  const isAuthenticated = user !== null;
 
   const isInitializing = useAppSelector((state) => state.auth.isInitializing);
 
@@ -26,6 +32,17 @@ function App() {
   const openAuthModal = (mode: AuthMode) => {
     setAuthMode(mode);
     setIsAuthOpen(true);
+  };
+
+  // Log out from anywhere (sidebar or top bar) and go to the landing page.
+  const handleLogout = async () => {
+    try {
+      await dispatch(logout()).unwrap();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      navigate("/");
+    }
   };
 
   if (isInitializing) {
@@ -50,7 +67,16 @@ function App() {
   return (
     <>
       <Routes>
-        <Route element={<Layout onOpenAuth={openAuthModal} />}>
+        <Route
+          element={
+            <Layout
+              user={user}
+              isInitializing={isInitializing}
+              onLogout={handleLogout}
+              onOpenAuth={openAuthModal}
+            />
+          }
+        >
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route
             path="dashboard"

@@ -2,7 +2,7 @@ import { useState, type SyntheticEvent } from "react";
 import { isAxiosError } from "axios";
 
 import "@/components/pages/Projects/CreateProjectModal.css";
-import Button from "@/components/common/Button";
+import Button from "@/components/ui/Button/Button";
 import type { ProjectTask } from "@/types/task.types";
 import { createTask } from "@/api/tasks.api";
 

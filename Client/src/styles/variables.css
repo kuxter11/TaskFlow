@@ -52,9 +52,17 @@
   --color-page-bg: #f8f9fc;
   --color-column-bg: #eef0f6;
 
+  /* Neutral */
+  --color-neutral-500: #888888;
+
   /* Status */
   --color-danger: #dc2626;
   --color-danger-soft: #fee2e2;
+  --color-danger-light: #ff8585;
+
+  /* Overlays */
+  --color-overlay: rgba(15, 23, 42, 0.55);
+  --color-overlay-strong: rgba(15, 23, 42, 0.6);
 
   /* Typography */
   --font-family-base: Inter, Arial, sans-serif;
@@ -83,11 +91,13 @@
   --radius-lg: 10px;
   --radius-xl: 12px;
   --radius-2xl: 14px;
+  --radius-3xl: 20px;
   --radius-pill: 999px;
   --radius-round: 50%;
 
   /* Shadows */
   --shadow-modal: 0 20px 50px rgba(0, 0, 0, 0.2);
+  --shadow-modal-lg: 0 24px 80px rgba(0, 0, 0, 0.2);
   --shadow-card-drag: 0 10px 25px rgba(36, 30, 90, 0.18);
   --focus-ring-primary: rgba(109, 92, 232, 0.35);
 

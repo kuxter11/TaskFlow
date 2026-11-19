@@ -1,7 +1,7 @@
 import { useState, type SyntheticEvent } from "react";
 
 import "./CreateProjectModal.css";
-import Button from "@/components/common/Button";
+import Button from "@/components/ui/Button/Button";
 import { useAppDispatch } from "@/app/hooks";
 import { addProject } from "@/features/projects/projectsSlice";
 

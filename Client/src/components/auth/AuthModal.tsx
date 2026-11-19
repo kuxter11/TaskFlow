@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type SyntheticEvent } from "react";
 
 import type { AuthMode } from "@/types/auth.types";
 import "./AuthModal.css";
-import Button from "@/components/common/Button";
+import Button from "@/components/ui/Button/Button";
 import { useAppDispatch } from "@/app/hooks";
 import { login, register } from "@/features/auth/authSlice";
 
@@ -192,7 +192,13 @@ export default function AuthModal({
         )}
 
         <div className="auth-form-actions">
-          <Button type="submit" variant="primary" isLoading={isLoading}>
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            fullWidth
+            isLoading={isLoading}
+          >
             {mode === "login" ? "Login" : "Register"}
           </Button>
         </div>

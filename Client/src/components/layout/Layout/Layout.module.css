@@ -1,12 +1,11 @@
-/* TEMPORARY: page-shell styles. They move to Layout.module.css in Phase 2. */
-.app-layout {
+.layout {
   display: flex;
   width: 100%;
   min-height: 100vh;
 }
 
 /* Main area next to sidebar */
-.main-layout {
+.main {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -15,21 +14,25 @@
 }
 
 /* Main page content */
-.app-content {
+.content {
   flex: 1;
   min-width: 0;
   padding: var(--space-8);
   background: var(--color-page-bg);
 }
 
-.app-content h1 {
+/*
+ * Base typography for every routed page (agreed exception to
+ * "parent must not style its children": this is the page shell's job).
+ */
+.content h1 {
   margin-bottom: var(--space-3);
   color: var(--color-navy);
   font-size: var(--font-size-4xl);
   font-weight: 700;
 }
 
-.app-content p {
+.content p {
   color: var(--color-gray-500);
   font-size: var(--font-size-lg);
   line-height: 1.6;
@@ -37,7 +40,7 @@
 
 /* Responsive */
 @media (max-width: 600px) {
-  .app-content {
+  .content {
     padding: var(--space-5) var(--space-4);
   }
 }

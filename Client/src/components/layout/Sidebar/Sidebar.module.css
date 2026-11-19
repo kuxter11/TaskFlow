@@ -1,0 +1,127 @@
+.sidebar {
+  position: relative;
+  width: 250px;
+  min-width: 250px;
+  min-height: 100vh;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6) var(--space-4);
+  background: var(--color-navy);
+  color: var(--color-white);
+  transition:
+    width 0.25s ease,
+    min-width 0.25s ease,
+    padding 0.25s ease;
+}
+
+/* Collapse toggle */
+.toggle {
+  position: absolute;
+  top: 28px;
+  right: -12px;
+  z-index: 2;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-round);
+  background: var(--color-primary);
+  color: var(--color-white);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.toggle:hover {
+  background: var(--color-primary-light);
+}
+
+/* Brand */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 10px;
+  margin-bottom: 45px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: var(--radius-lg);
+  background: var(--color-primary);
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+}
+
+/* Section title */
+.sectionLabel {
+  padding: 0 var(--space-3);
+  margin-bottom: var(--space-3);
+  color: var(--color-navy-muted);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Bottom links */
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: auto;
+}
+
+/* Collapsed desktop sidebar (links collapse through their own isCollapsed prop) */
+.collapsed {
+  width: 72px;
+  min-width: 72px;
+  padding: var(--space-6) 10px;
+}
+
+.collapsed .brand {
+  justify-content: center;
+  padding: 0;
+}
+
+.collapsed .brandName,
+.collapsed .sectionLabel {
+  display: none;
+}
+
+/* Mobile: always compact, regardless of React state */
+@media (max-width: 600px) {
+  .sidebar {
+    width: 72px;
+    min-width: 72px;
+    padding: var(--space-5) 10px;
+  }
+
+  .brand {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .brandName,
+  .sectionLabel {
+    display: none;
+  }
+
+  .toggle {
+    display: none;
+  }
+}

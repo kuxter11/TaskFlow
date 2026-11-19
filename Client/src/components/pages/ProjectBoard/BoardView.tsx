@@ -6,7 +6,7 @@ import {
   taskStatuses,
   type ProjectTask,
 } from "@/types/task.types";
-import Button from "@/components/common/Button";
+import Button from "@/components/ui/Button/Button";
 import BoardColumn from "./BoardColumn";
 import CreateTaskModal from "./CreateTaskModal";
 import "./ProjectBoard.css";
