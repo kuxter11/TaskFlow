@@ -1,6 +1,14 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  type PayloadAction,
+} from "@reduxjs/toolkit";
 import type { User } from "../../types/user.types";
-import type { LoginData, RegisterData } from "../../types/auth.types";
+import type {
+  LoginData,
+  LoginDataResponse,
+  RegisterData,
+} from "../../types/auth.types";
 
 import {
   login as loginRequest,
@@ -95,6 +103,14 @@ const authSlice = createSlice({
     clearAuthError: (state) => {
       state.error = null;
     },
+    sessionRefreshed: (state, action: PayloadAction<LoginDataResponse>) => {
+      state.user = action.payload.user;
+      state.token = action.payload.accessToken;
+    },
+    sessionExpired: (state) => {
+      state.user = null;
+      state.token = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -145,6 +161,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { clearAuthError } = authSlice.actions;
+export const { clearAuthError, sessionRefreshed, sessionExpired } =
+  authSlice.actions;
 
 export default authSlice.reducer;

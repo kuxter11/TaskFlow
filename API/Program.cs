@@ -49,6 +49,7 @@ builder
                 Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Token"]!)
             ),
             ValidateIssuerSigningKey = true,
+            ClockSkew = TimeSpan.Zero,
         };
     });
 
