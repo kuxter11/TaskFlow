@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { Project, CreateProjectData } from "@/types/project.types";
+import type { Project, CreateProjectData } from "./types";
 import type { RootState } from "@/app/store";
 import {
   getProjects as getProjectsApi,
   createProject as createProjectApi,
-} from "@/api/projects.api";
+} from "./projects.api";
 import { isAxiosError } from "axios";
 
 interface ProjectsState {

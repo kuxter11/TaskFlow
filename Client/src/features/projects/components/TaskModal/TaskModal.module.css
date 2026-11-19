@@ -1,0 +1,21 @@
+/* The form places its fields; each FormField styles itself. */
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.assignToMe {
+  align-self: flex-start;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-primary);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.assignToMe:hover {
+  text-decoration: underline;
+}

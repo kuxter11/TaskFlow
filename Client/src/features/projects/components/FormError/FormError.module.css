@@ -1,0 +1,9 @@
+/*
+ * Note: Layout's ".content p" (higher specificity) overrides color and
+ * font-size here, exactly as it did before the refactor. Only margin applies.
+ */
+.error {
+  color: var(--color-danger);
+  font-size: var(--font-size-md);
+  margin-top: var(--space-3);
+}

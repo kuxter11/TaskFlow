@@ -1,0 +1,47 @@
+/*
+ * Rule order matches the original CSS on purpose: .card comes after .dragging,
+ * so its `border` shorthand resets the dragging border color (only the shadow shows).
+ */
+.dragging {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-card-drag);
+}
+
+.card {
+  padding: 14px;
+  border: 1px solid var(--color-slate-200);
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-slate-800);
+  overflow-wrap: anywhere;
+}
+
+/* p.description (not just .description) so it beats Layout's ".content p" font-size */
+p.description {
+  margin-top: 6px;
+  font-size: var(--font-size-md);
+  overflow-wrap: anywhere;
+}
+
+.card:hover {
+  border-color: var(--color-primary);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.meta {
+  font-size: var(--font-size-sm);
+  color: var(--color-slate-400);
+}

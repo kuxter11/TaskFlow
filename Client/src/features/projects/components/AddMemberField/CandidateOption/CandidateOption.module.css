@@ -1,0 +1,22 @@
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-2) 10px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.option:hover:not(:disabled) {
+  background: var(--color-primary-soft);
+}
+
+.option:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -1,0 +1,6 @@
+/* The stack only places the avatars; overlap styling lives in Avatar (stacked prop). */
+.stack {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}

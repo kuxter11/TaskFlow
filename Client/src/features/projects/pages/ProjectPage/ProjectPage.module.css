@@ -1,0 +1,7 @@
+.header {
+  margin-bottom: var(--space-4);
+}
+
+.description {
+  overflow-wrap: anywhere;
+}

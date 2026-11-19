@@ -1,0 +1,34 @@
+.empty {
+  width: 100%;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-slate-400);
+  padding: 40px var(--space-5);
+  box-sizing: border-box;
+}
+
+.icon {
+  width: 110px;
+  height: 110px;
+  margin-bottom: var(--space-6);
+  color: var(--color-slate-400);
+}
+
+.title {
+  margin: 0 0 var(--space-3);
+  font-size: var(--font-size-4xl);
+  color: var(--color-slate-700);
+}
+
+/* p.text (not just .text) so it beats Layout's ".content p" */
+p.text {
+  max-width: 420px;
+  margin: 0;
+  font-size: var(--font-size-xl);
+  line-height: 1.6;
+  color: var(--color-slate-500);
+}

@@ -1,0 +1,52 @@
+.column {
+  padding: 14px;
+  border-radius: var(--radius-xl);
+  background: var(--color-column-bg);
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  padding: 0 var(--space-1);
+}
+
+.title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--color-slate-600);
+}
+
+.count {
+  padding: 2px 9px;
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+  color: var(--color-slate-500);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.body {
+  min-height: 120px;
+  border-radius: var(--radius-md);
+  transition: background 0.15s ease;
+}
+
+.bodyOver {
+  background: var(--color-primary-drop);
+}
+
+/*
+ * Note: Layout's ".content p" (higher specificity) overrides color and
+ * font-size here, exactly as it did before the refactor.
+ */
+.empty {
+  padding: var(--space-4) 0;
+  text-align: center;
+  font-size: var(--font-size-md);
+  color: var(--color-slate-400);
+}

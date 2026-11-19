@@ -1,0 +1,18 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+/* h1.title (not just .title) so it beats Layout's ".content h1" margin */
+h1.title {
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .header {
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+}

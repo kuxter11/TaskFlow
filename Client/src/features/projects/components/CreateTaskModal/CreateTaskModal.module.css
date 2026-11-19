@@ -1,0 +1,6 @@
+/* The form places its fields; each FormField styles itself. */
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

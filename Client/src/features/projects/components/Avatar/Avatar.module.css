@@ -1,0 +1,35 @@
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-round);
+  background: var(--color-primary-subtle);
+  color: var(--color-primary-text);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+/* "+3" bubble in an AvatarStack */
+.muted {
+  background: var(--color-slate-100);
+  color: var(--color-slate-500);
+}
+
+/* Unassigned task */
+.empty {
+  background: transparent;
+  border: 1px dashed var(--color-slate-300);
+  color: var(--color-slate-400);
+}
+
+/* Overlapping avatars */
+.stacked {
+  margin-left: -8px;
+  box-shadow: 0 0 0 2px var(--color-white);
+}
+
+.stacked:first-child {
+  margin-left: 0;
+}

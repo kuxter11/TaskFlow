@@ -16,6 +16,11 @@
   --color-primary-bg: #f7f6ff;
   --color-primary-focus: #7c6cf0;
   --color-primary-border-hover: #c4bdf5;
+  --color-primary-drop: #e3e0fb;
+  --color-primary-icon-bg: #eef0ff;
+
+  /* Blue (focus of project/task form fields) */
+  --color-focus-blue: #2563eb;
 
   /* Navy (sidebar, headings) */
   --color-navy: #17172b;

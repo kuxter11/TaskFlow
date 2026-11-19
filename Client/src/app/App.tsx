@@ -8,11 +8,11 @@ import { useAuthModal } from "@/features/auth/hooks/useAuthModal";
 // before the page components' CSS so page styles keep winning.
 import AuthModal from "@/features/auth/components/AuthModal/AuthModal";
 import Layout from "@/components/layout/Layout/Layout";
-import Projects from "@/components/pages/Projects/Projects";
+import ProjectsPage from "@/features/projects/pages/ProjectsPage/ProjectsPage";
 import LandingPage from "@/components/landing/LandingPage";
-import ProjectBoard from "@/components/pages/ProjectBoard/ProjectBoard";
-import ProjectLayout from "@/components/pages/ProjectLayout/ProjectLayout";
-import ProjectMembers from "@/components/pages/ProjectMembers/ProjectMembers";
+import ProjectBoardPage from "@/features/projects/pages/ProjectBoardPage/ProjectBoardPage";
+import ProjectPage from "@/features/projects/pages/ProjectPage/ProjectPage";
+import ProjectMembersPage from "@/features/projects/pages/ProjectMembersPage/ProjectMembersPage";
 
 import styles from "./App.module.css";
 
@@ -66,11 +66,11 @@ function App() {
                 </>
               }
             />
-            <Route path="projects" element={<Projects />} />
-            <Route path="projects/:projectId" element={<ProjectLayout />}>
+            <Route path="projects" element={<ProjectsPage />} />
+            <Route path="projects/:projectId" element={<ProjectPage />}>
               <Route index element={<Navigate to="board" replace />} />
-              <Route path="board" element={<ProjectBoard />} />
-              <Route path="members" element={<ProjectMembers />} />
+              <Route path="board" element={<ProjectBoardPage />} />
+              <Route path="members" element={<ProjectMembersPage />} />
             </Route>
             <Route path="settings" element={<h1>Settings</h1>} />
             <Route path="*" element={<h1>Page not found</h1>} />
