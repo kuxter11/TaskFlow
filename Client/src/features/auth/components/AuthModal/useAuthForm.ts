@@ -1,7 +1,7 @@
 import { useState, type SyntheticEvent } from "react";
 import { useAppDispatch } from "@/app/hooks";
 import type { AuthMode } from "@/types/auth.types";
-import { login, register } from "../../authSlice";
+import { login, register } from "@/features/auth/authSlice";
 
 // All form state and submit logic of the AuthModal, kept out of the JSX.
 export function useAuthForm(initialMode: AuthMode, onClose: () => void) {

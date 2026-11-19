@@ -8,10 +8,12 @@ when you refactor or add code, briefly explain WHY (which rule applied).
 ```
 src/
 ├── app/                # App.tsx, store.ts, hooks.ts, providers
+├── api/                # shared HTTP client only (axios.ts with interceptors)
 ├── features/<name>/
 │   ├── components/     # components used only by this feature (one folder each)
 │   ├── pages/          # top-level screens (suffix: Page, e.g. ProjectsPage)
-│   ├── hooks/          # custom hooks for this feature
+│   ├── hooks/          # custom hooks shared inside this feature
+│   ├── <name>.api.ts   # API calls of this feature
 │   ├── <name>Slice.ts
 │   └── types.ts
 ├── components/
@@ -48,6 +50,8 @@ Rules:
 
 - Exception: a component with no styles of its own (e.g. a small wrapper) can be a single
   file without a folder.
+- A hook used by only one component or page lives in that component's folder;
+  a hook shared inside a feature goes to `features/<name>/hooks/`.
 - Hooks: `useSomething.ts`. Slices: `<feature>Slice.ts`. Static data: `<Component>.data.ts`.
 - Use the `@/` path alias (`@/features/projects/...`) instead of `../../../`.
 
