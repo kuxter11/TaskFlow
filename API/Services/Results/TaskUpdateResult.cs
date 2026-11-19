@@ -1,6 +1,6 @@
 ﻿using API.Dtos.Task;
 
-namespace API.Services
+namespace API.Services.Results
 {
     public enum TaskUpdateError
     {

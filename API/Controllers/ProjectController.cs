@@ -1,5 +1,6 @@
 ﻿using API.Dtos.Project;
 using API.Services.Interfaces;
+using API.Services.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -58,6 +59,68 @@ namespace API.Controllers
             );
 
             return members is null ? NotFound() : Ok(members);
+        }
+
+        [HttpPost("{id:int}/members")]
+        public async Task<ActionResult<ProjectMemberDto>> AddMember(int id, AddMemberDto dto)
+        {
+            var result = await projectService.AddMemberAsync(
+                id,
+                dto,
+                currentUser.UserId,
+                currentUser.Role
+            );
+
+            return result.Error switch
+            {
+                MemberChangeError.None => Ok(result.Member),
+                MemberChangeError.NotFound => NotFound(),
+                MemberChangeError.Forbidden => StatusCode(403),
+                MemberChangeError.AlreadyMember => Conflict(
+                    new { message = "User is already a member." }
+                ),
+                _ => BadRequest(new { message = "User not found." }),
+            };
+        }
+
+        [HttpDelete("{id:int}/members/{memberId:guid}")]
+        public async Task<IActionResult> RemoveMember(int id, Guid memberId)
+        {
+            var error = await projectService.RemoveMemberAsync(
+                id,
+                memberId,
+                currentUser.UserId,
+                currentUser.Role
+            );
+
+            return error switch
+            {
+                MemberChangeError.None => NoContent(),
+                MemberChangeError.NotFound or MemberChangeError.NotAMember => NotFound(),
+                MemberChangeError.Forbidden => StatusCode(403),
+                _ => BadRequest(new { message = "The project creator can't be removed." }),
+            };
+        }
+
+        [HttpGet("{id:int}/members/candidates")]
+        public async Task<ActionResult<List<ProjectMemberDto>>> SearchCandidates(
+            int id,
+            [FromQuery] string q = ""
+        )
+        {
+            var result = await projectService.SearchCandidatesAsync(
+                id,
+                q,
+                currentUser.UserId,
+                currentUser.Role
+            );
+
+            return result.Error switch
+            {
+                MemberChangeError.None => Ok(result.Users),
+                MemberChangeError.NotFound => NotFound(),
+                _ => StatusCode(403),
+            };
         }
     }
 }

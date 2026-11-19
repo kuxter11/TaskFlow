@@ -11,6 +11,8 @@ import LandingPage from "./components/landing/LandingPage";
 import { Navigate, Route, Routes } from "react-router";
 import Layout from "./components/layout/Layout";
 import ProjectBoard from "./components/pages/ProjectBoard/ProjectBoard";
+import ProjectLayout from "./components/pages/ProjectLayout/ProjectLayout";
+import ProjectMembers from "./components/pages/ProjectMembers/ProjectMembers";
 
 function App() {
   const isAuthenticated = useAppSelector((state) => state.auth.user !== null);
@@ -59,9 +61,11 @@ function App() {
             }
           />
           <Route path="projects" element={<Projects />} />
-          <Route path="projects/:projectId" element={<ProjectBoard />} />
-          <Route path="team" element={<h1>Team</h1>} />
-          <Route path="calendar" element={<h1>Calendar</h1>} />
+          <Route path="projects/:projectId" element={<ProjectLayout />}>
+            <Route index element={<Navigate to="board" replace />} />
+            <Route path="board" element={<ProjectBoard />} />
+            <Route path="members" element={<ProjectMembers />} />
+          </Route>
           <Route path="settings" element={<h1>Settings</h1>} />
           <Route path="*" element={<h1>Page not found</h1>} />
         </Route>

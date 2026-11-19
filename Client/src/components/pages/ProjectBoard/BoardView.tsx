@@ -70,12 +70,7 @@ export default function BoardView({
 
   return (
     <div className="board-page">
-      <div className="board-header">
-        <div>
-          <h1>{project.name}</h1>
-          <p>{project.description}</p>
-        </div>
-
+      <div className="board-toolbar">
         <Button variant="primary" onClick={() => setIsModalOpen(true)}>
           <Plus size={18} />
           Add Task

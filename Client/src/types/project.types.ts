@@ -14,4 +14,9 @@ export interface CreateProjectData {
 export interface ProjectMember {
   userId: string;
   username: string;
+  email: string;
+}
+
+export interface ProjectOutletContext {
+  project: Project;
 }

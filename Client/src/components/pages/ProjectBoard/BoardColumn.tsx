@@ -3,6 +3,7 @@ import { ProjectTaskStatus, type ProjectTask } from "../../../types/task.types";
 import type { ProjectMember } from "../../../types/project.types";
 import { UserPlus } from "lucide-react";
 import "./BoardColumn.css";
+import Avatar from "../../common/Avatar";
 
 interface BoardColumnProps {
   title: string;
@@ -10,10 +11,6 @@ interface BoardColumnProps {
   tasks: ProjectTask[];
   members: ProjectMember[];
   onSelectTask: (task: ProjectTask) => void;
-}
-
-function getInitials(name: string) {
-  return name.slice(0, 2).toUpperCase();
 }
 
 function formatDate(iso: string) {
@@ -82,9 +79,7 @@ export default function BoardColumn({
                           </span>
 
                           {assignee ? (
-                            <span className="avatar" title={assignee.username}>
-                              {getInitials(assignee.username)}
-                            </span>
+                            <Avatar name={assignee.username} />
                           ) : task.assigneeId ? (
                             <span className="avatar" title="Former member">
                               ?

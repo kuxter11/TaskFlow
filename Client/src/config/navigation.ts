@@ -1,10 +1,4 @@
-import {
-  LayoutDashboard,
-  FolderKanban,
-  Settings,
-  UserGroup,
-  CalendarDays,
-} from "lucide-react";
+import { LayoutDashboard, FolderKanban, Settings } from "lucide-react";
 
 export const Page = {
   Dashboard: "Dashboard",
@@ -28,18 +22,6 @@ export const navigationItems = [
     label: "Projects",
     icon: FolderKanban,
     path: "/projects",
-  },
-  {
-    id: Page.Team,
-    label: "Team",
-    icon: UserGroup,
-    path: "/team",
-  },
-  {
-    id: Page.Calendar,
-    label: "Calendar",
-    icon: CalendarDays,
-    path: "/calendar",
   },
   {
     id: Page.Settings,

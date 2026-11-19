@@ -4,7 +4,11 @@ import { isAxiosError } from "axios";
 import "../Projects/CreateProjectModal.css";
 import Button from "../../common/Button";
 import { updateTask } from "../../../api/tasks.api";
-import { ProjectTaskStatus, type ProjectTask } from "../../../types/task.types";
+import {
+  ProjectTaskStatus,
+  taskStatuses,
+  type ProjectTask,
+} from "../../../types/task.types";
 import type { ProjectMember } from "../../../types/project.types";
 import { useAppSelector } from "../../../store/hooks";
 
@@ -14,12 +18,6 @@ interface TaskModalProps {
   onClose: () => void;
   onUpdated: (task: ProjectTask) => void;
 }
-
-const statusOptions = [
-  { value: ProjectTaskStatus.ToDo, label: "To Do" },
-  { value: ProjectTaskStatus.InProgress, label: "In Progress" },
-  { value: ProjectTaskStatus.Done, label: "Done" },
-];
 
 export default function TaskModal({
   task,
@@ -52,7 +50,7 @@ export default function TaskModal({
         title: title.trim(),
         description: description.trim(),
         status,
-        assigneeId,
+        assigneeId: assigneeId || null,
       });
 
       onUpdated(updated);
@@ -121,9 +119,9 @@ export default function TaskModal({
                 setStatus(Number(event.target.value) as ProjectTaskStatus)
               }
             >
-              {statusOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
+              {taskStatuses.map((option) => (
+                <option key={option.status} value={option.status}>
+                  {option.title}
                 </option>
               ))}
             </select>

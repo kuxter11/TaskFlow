@@ -1,9 +1,7 @@
-.board-header {
+.board-toolbar {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 24px;
+  justify-content: flex-end;
+  margin-bottom: 16px;
 }
 
 .board-columns {
