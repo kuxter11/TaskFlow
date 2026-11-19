@@ -3,19 +3,19 @@ import {
   createAsyncThunk,
   type PayloadAction,
 } from "@reduxjs/toolkit";
-import type { User } from "../../types/user.types";
+import type { User } from "@/types/user.types";
 import type {
   LoginData,
   LoginDataResponse,
   RegisterData,
-} from "../../types/auth.types";
+} from "@/types/auth.types";
 
 import {
   login as loginRequest,
   register as registerRequest,
   refresh as refreshRequest,
   logout as logoutRequest,
-} from "../../api/auth.api";
+} from "@/api/auth.api";
 
 interface AuthState {
   user: User | null;

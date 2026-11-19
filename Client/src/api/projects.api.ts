@@ -3,7 +3,7 @@ import type {
   Project,
   CreateProjectData,
   ProjectMember,
-} from "../types/project.types";
+} from "@/types/project.types";
 import type { AxiosRequestConfig } from "axios";
 
 export async function getProjects(): Promise<Project[]> {

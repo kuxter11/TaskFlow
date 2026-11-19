@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useAppDispatch } from "./store/hooks";
-import { refreshSession } from "./features/auth/authSlice";
+import { useAppDispatch } from "./hooks";
+import { refreshSession } from "@/features/auth/authSlice";
 import App from "./App";
 
 export default function AppInitializer() {

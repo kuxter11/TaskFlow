@@ -79,7 +79,7 @@ Do NOT split when:
 - Common UI patterns get ONE base component in `components/ui/`, and features build on top of it
   instead of re-implementing it.
 - **Modal**: `components/ui/Modal/Modal.tsx` owns everything every modal shares:
-  overlay, centering, close button, closing on Escape and overlay click, focus/scroll lock,
+  overlay, centering, close button, closing on Escape and the X button (NOT on overlay click), focus/scroll lock,
   and the `isOpen` / `onClose` / `title` / `children` / `footer` props.
   Feature modals (`CreateProjectModal`, `AuthModal`) only contain their own content and form logic
   and render it inside `<Modal>`. They must not have their own overlay or close logic.

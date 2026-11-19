@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
-import type { Project, ProjectMember } from "../../../types/project.types";
+import type { Project, ProjectMember } from "@/types/project.types";
 import {
   ProjectTaskStatus,
   taskStatuses,
   type ProjectTask,
-} from "../../../types/task.types";
-import Button from "../../common/Button";
+} from "@/types/task.types";
+import Button from "@/components/common/Button";
 import BoardColumn from "./BoardColumn";
 import CreateTaskModal from "./CreateTaskModal";
 import "./ProjectBoard.css";
 import TaskModal from "./TaskModal";
 import { DragDropContext, type DropResult } from "@hello-pangea/dnd";
-import { updateTaskStatus } from "../../../api/tasks.api";
+import { updateTaskStatus } from "@/api/tasks.api";
 
 interface BoardViewProps {
   project: Project;

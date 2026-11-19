@@ -4,7 +4,7 @@ import type {
   ProjectTask,
   ProjectTaskStatus,
   UpdateTaskData,
-} from "../types/task.types";
+} from "@/types/task.types";
 import api from "./axios";
 
 export async function getTasks(projectId: number, config?: AxiosRequestConfig) {

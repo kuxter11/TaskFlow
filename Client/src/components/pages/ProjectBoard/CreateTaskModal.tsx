@@ -1,10 +1,10 @@
 import { useState, type SyntheticEvent } from "react";
 import { isAxiosError } from "axios";
 
-import "../Projects/CreateProjectModal.css";
-import Button from "../../common/Button";
-import type { ProjectTask } from "../../../types/task.types";
-import { createTask } from "../../../api/tasks.api";
+import "@/components/pages/Projects/CreateProjectModal.css";
+import Button from "@/components/common/Button";
+import type { ProjectTask } from "@/types/task.types";
+import { createTask } from "@/api/tasks.api";
 
 interface CreateTaskModalProps {
   isOpen: boolean;

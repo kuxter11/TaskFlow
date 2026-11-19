@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState, type SyntheticEvent } from "react";
 
-import type { AuthMode } from "../../types/auth.types";
+import type { AuthMode } from "@/types/auth.types";
 import "./AuthModal.css";
-import Button from "../common/Button";
-import { useAppDispatch } from "../../store/hooks";
-import { login, register } from "../../features/auth/authSlice";
+import Button from "@/components/common/Button";
+import { useAppDispatch } from "@/app/hooks";
+import { login, register } from "@/features/auth/authSlice";
 
 interface AuthModalProps {
   isOpen: boolean;

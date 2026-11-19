@@ -1,0 +1,96 @@
+/*
+ * Design tokens. Every value here is copied exactly from the existing CSS,
+ * so switching a hard-coded value to its variable never changes the look.
+ * Near-identical shades (e.g. slate-500 vs gray-500) are kept separate on purpose.
+ */
+:root {
+  /* Brand (purple) */
+  --color-primary: #6d5ce8;
+  --color-primary-hover: #5948d6;
+  --color-primary-dark: #5b4bd1;
+  --color-primary-light: #7d6df0;
+  --color-primary-text: #4b3fc4;
+  --color-primary-subtle: #e8e5fd;
+  --color-primary-soft: #f1efff;
+  --color-primary-tint: #f0edff;
+  --color-primary-bg: #f7f6ff;
+
+  /* Navy (sidebar, headings) */
+  --color-navy: #17172b;
+  --color-navy-hover: #25253f;
+  --color-navy-muted: #77778f;
+  --color-navy-faded: #a6a6bc;
+
+  /* Landing text tones */
+  --color-ink-muted: #66667a;
+  --color-ink-soft: #88889a;
+  --color-border-soft: #eeeef5;
+
+  /* Base */
+  --color-white: #ffffff;
+
+  /* Slate scale (app pages) */
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+
+  /* Gray scale (auth modal) */
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  /* Surfaces */
+  --color-page-bg: #f8f9fc;
+  --color-column-bg: #eef0f6;
+
+  /* Status */
+  --color-danger: #dc2626;
+  --color-danger-soft: #fee2e2;
+
+  /* Typography */
+  --font-family-base: Inter, Arial, sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-md: 13px;
+  --font-size-base: 14px;
+  --font-size-lg: 15px;
+  --font-size-xl: 16px;
+  --font-size-2xl: 18px;
+  --font-size-3xl: 22px;
+  --font-size-4xl: 28px;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 14px;
+  --radius-pill: 999px;
+  --radius-round: 50%;
+
+  /* Shadows */
+  --shadow-modal: 0 20px 50px rgba(0, 0, 0, 0.2);
+  --shadow-card-drag: 0 10px 25px rgba(36, 30, 90, 0.18);
+  --focus-ring-primary: rgba(109, 92, 232, 0.35);
+
+  /* Breakpoint reference (CSS variables can't be used in @media):
+     mobile ≤ 600px, small ≤ 480px */
+}

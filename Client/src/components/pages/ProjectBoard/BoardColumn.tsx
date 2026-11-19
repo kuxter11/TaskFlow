@@ -1,9 +1,9 @@
 import { Draggable, Droppable } from "@hello-pangea/dnd";
-import { ProjectTaskStatus, type ProjectTask } from "../../../types/task.types";
-import type { ProjectMember } from "../../../types/project.types";
+import { ProjectTaskStatus, type ProjectTask } from "@/types/task.types";
+import type { ProjectMember } from "@/types/project.types";
 import { UserPlus } from "lucide-react";
 import "./BoardColumn.css";
-import Avatar from "../../common/Avatar";
+import Avatar from "@/components/common/Avatar";
 
 interface BoardColumnProps {
   title: string;

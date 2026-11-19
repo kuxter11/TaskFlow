@@ -1,7 +1,7 @@
-import { logout } from "../../../features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import type { AuthMode } from "../../../types/auth.types";
-import Button from "../../common/Button";
+import { logout } from "@/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import type { AuthMode } from "@/types/auth.types";
+import Button from "@/components/common/Button";
 import "./TopBar.css";
 interface TopBarProps {
   onOpenAuth: (mode: AuthMode) => void;

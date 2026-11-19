@@ -1,18 +1,19 @@
 import { useState } from "react";
+import { Navigate, Route, Routes } from "react-router";
 
-import AuthModal from "./components/auth/AuthModal";
+import { useAppSelector } from "./hooks";
+import type { AuthMode } from "@/types/auth.types";
 
-import { useAppSelector } from "./store/hooks";
+import AuthModal from "@/components/auth/AuthModal";
+import LandingPage from "@/components/landing/LandingPage";
+import Layout from "@/components/layout/Layout";
+import Projects from "@/components/pages/Projects/Projects";
+import ProjectBoard from "@/components/pages/ProjectBoard/ProjectBoard";
+import ProjectLayout from "@/components/pages/ProjectLayout/ProjectLayout";
+import ProjectMembers from "@/components/pages/ProjectMembers/ProjectMembers";
 
 import "./App.css";
-import type { AuthMode } from "./types/auth.types";
-import Projects from "./components/pages/Projects/Projects";
-import LandingPage from "./components/landing/LandingPage";
-import { Navigate, Route, Routes } from "react-router";
-import Layout from "./components/layout/Layout";
-import ProjectBoard from "./components/pages/ProjectBoard/ProjectBoard";
-import ProjectLayout from "./components/pages/ProjectLayout/ProjectLayout";
-import ProjectMembers from "./components/pages/ProjectMembers/ProjectMembers";
+import styles from "./App.module.css";
 
 function App() {
   const isAuthenticated = useAppSelector((state) => state.auth.user !== null);
@@ -28,7 +29,7 @@ function App() {
   };
 
   if (isInitializing) {
-    return <div className="app-loading">Loading...</div>;
+    return <div className={styles.loading}>Loading...</div>;
   }
 
   if (!isAuthenticated) {

@@ -3,10 +3,10 @@ import { isAxiosError } from "axios";
 import {
   addProjectMember,
   searchMemberCandidates,
-} from "../../../api/projects.api";
-import type { ProjectMember } from "../../../types/project.types";
-import Avatar from "../../common/Avatar";
-import { useDebouncedValue } from "../../../hooks/useDebounceValue";
+} from "@/api/projects.api";
+import type { ProjectMember } from "@/types/project.types";
+import Avatar from "@/components/common/Avatar";
+import { useDebouncedValue } from "@/hooks/useDebounceValue";
 
 interface AddMemberFieldProps {
   projectId: number;

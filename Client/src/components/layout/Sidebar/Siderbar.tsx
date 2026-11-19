@@ -2,7 +2,7 @@ import { HelpCircle, LogOut, ChevronRight, ChevronLeft } from "lucide-react";
 
 import "./Sidebar.css";
 import { useState } from "react";
-import { navigationItems } from "../../../config/navigation";
+import { navigationItems } from "@/config/navigation";
 import { NavLink } from "react-router";
 
 interface SidebarProps {

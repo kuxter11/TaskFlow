@@ -1,5 +1,5 @@
 import "./LandingNavbar.css";
-import type { AuthMode } from "../../types/auth.types";
+import type { AuthMode } from "@/types/auth.types";
 
 interface LandingNavbarProps {
   onOpenAuth: (mode: AuthMode) => void;

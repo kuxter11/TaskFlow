@@ -1,9 +1,9 @@
 import { useState, type SyntheticEvent } from "react";
 
 import "./CreateProjectModal.css";
-import Button from "../../common/Button";
-import { useAppDispatch } from "../../../store/hooks";
-import { addProject } from "../../../features/projects/projectsSlice";
+import Button from "@/components/common/Button";
+import { useAppDispatch } from "@/app/hooks";
+import { addProject } from "@/features/projects/projectsSlice";
 
 interface CreateProjectModalProps {
   isOpen: boolean;

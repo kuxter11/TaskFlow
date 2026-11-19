@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { FolderKanban, Layers } from "lucide-react";
-import { getTasks } from "../../../api/tasks.api";
-import { getProjectMembers } from "../../../api/projects.api";
-import type { Project, ProjectMember } from "../../../types/project.types";
-import { ProjectTaskStatus, type ProjectTask } from "../../../types/task.types";
+import { getTasks } from "@/api/tasks.api";
+import { getProjectMembers } from "@/api/projects.api";
+import type { Project, ProjectMember } from "@/types/project.types";
+import { ProjectTaskStatus, type ProjectTask } from "@/types/task.types";
 import "./ProjectCard.css";
-import AvatarStack from "../../common/AvatarStack";
+import AvatarStack from "@/components/common/AvatarStack";
 
 interface ProjectCardProps {
   project: Project;

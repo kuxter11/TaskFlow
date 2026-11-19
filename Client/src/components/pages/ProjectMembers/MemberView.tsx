@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { X } from "lucide-react";
-import { removeProjectMember } from "../../../api/projects.api";
-import { useAppSelector } from "../../../store/hooks";
-import type { Project, ProjectMember } from "../../../types/project.types";
-import { UserRole } from "../../../types/role.types";
-import Avatar from "../../common/Avatar";
+import { removeProjectMember } from "@/api/projects.api";
+import { useAppSelector } from "@/app/hooks";
+import type { Project, ProjectMember } from "@/types/project.types";
+import { UserRole } from "@/types/role.types";
+import Avatar from "@/components/common/Avatar";
 import AddMemberField from "./AddMemberField";
 import "./ProjectMembers.css";
 

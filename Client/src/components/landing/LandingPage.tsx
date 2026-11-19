@@ -1,5 +1,5 @@
 import LandingNavbar from "./LandingNavbar";
-import type { AuthMode } from "../../types/auth.types";
+import type { AuthMode } from "@/types/auth.types";
 import "./LandingPage.css";
 import HeroSection from "./HeroSection";
 import FeaturesSection from "./FeatureSection";

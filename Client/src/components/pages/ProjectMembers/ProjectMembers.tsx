@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router";
-import { getProjectMembers } from "../../../api/projects.api";
+import { getProjectMembers } from "@/api/projects.api";
 import type {
   ProjectMember,
   ProjectOutletContext,
-} from "../../../types/project.types";
+} from "@/types/project.types";
 import "./ProjectMembers.css";
 import MembersView from "./MemberView";
 

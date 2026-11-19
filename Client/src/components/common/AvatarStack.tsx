@@ -1,4 +1,4 @@
-import type { ProjectMember } from "../../types/project.types";
+import type { ProjectMember } from "@/types/project.types";
 import Avatar from "./Avatar";
 import "./AvatarStack.css";
 

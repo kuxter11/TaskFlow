@@ -1,16 +1,16 @@
 import { useState, type SyntheticEvent } from "react";
 import { isAxiosError } from "axios";
 
-import "../Projects/CreateProjectModal.css";
-import Button from "../../common/Button";
-import { updateTask } from "../../../api/tasks.api";
+import "@/components/pages/Projects/CreateProjectModal.css";
+import Button from "@/components/common/Button";
+import { updateTask } from "@/api/tasks.api";
 import {
   ProjectTaskStatus,
   taskStatuses,
   type ProjectTask,
-} from "../../../types/task.types";
-import type { ProjectMember } from "../../../types/project.types";
-import { useAppSelector } from "../../../store/hooks";
+} from "@/types/task.types";
+import type { ProjectMember } from "@/types/project.types";
+import { useAppSelector } from "@/app/hooks";
 
 interface TaskModalProps {
   task: ProjectTask;

@@ -1,8 +1,8 @@
 import axios, { isAxiosError } from "axios";
-import { store } from "../store/store";
+import { store } from "@/app/store";
 import { toast } from "sonner";
 import { refresh } from "./auth.api";
-import { sessionExpired, sessionRefreshed } from "../features/auth/authSlice";
+import { sessionExpired, sessionRefreshed } from "@/features/auth/authSlice";
 
 declare module "axios" {
   interface AxiosRequestConfig {

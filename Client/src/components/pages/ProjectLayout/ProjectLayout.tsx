@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useParams } from "react-router";
 import { isAxiosError } from "axios";
-import { getProjectById } from "../../../api/projects.api";
+import { getProjectById } from "@/api/projects.api";
 import type {
   Project,
   ProjectOutletContext,
-} from "../../../types/project.types";
+} from "@/types/project.types";
 import "./ProjectLayout.css";
 
 interface LoadResult {

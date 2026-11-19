@@ -1,9 +1,9 @@
 import { Outlet, useNavigate } from "react-router";
-import Sidebar from "./Sidebar/Siderbar";
-import TopBar from "./TopBar/TopBar";
-import { useAppDispatch } from "../../store/hooks";
-import { logout } from "../../features/auth/authSlice";
-import type { AuthMode } from "../../types/auth.types";
+import Sidebar from "@/components/layout/Sidebar/Siderbar";
+import TopBar from "@/components/layout/TopBar/TopBar";
+import { useAppDispatch } from "@/app/hooks";
+import { logout } from "@/features/auth/authSlice";
+import type { AuthMode } from "@/types/auth.types";
 
 interface LayoutProps {
   onOpenAuth: (mode: AuthMode) => void;
