@@ -31,7 +31,31 @@
   /* Landing text tones */
   --color-ink-muted: #66667a;
   --color-ink-soft: #88889a;
+  --color-ink-faint: #9999a8;
+  --color-ink-strong: #33334a;
+  --color-ink-on-dark: #b8b8ca;
   --color-border-soft: #eeeef5;
+  --color-border-lilac: #e8e6f2;
+  --color-border-lavender: #eae8f7;
+  --color-border-purple: #dedbf5;
+  --color-navy-border: #303047;
+
+  /* Landing accents */
+  --color-primary-hover-bg: #f4f3fc;
+  --color-primary-avatar-bg: #eeeaff;
+  --color-primary-number: #dcd8fa;
+  --color-primary-on-dark: #a69af8;
+  --color-success: #43b89c;
+  --color-success-text: #219b77;
+  --color-success-bg: #e5f8f1;
+
+  /* Landing shadows */
+  --shadow-card-hover: 0 15px 35px rgba(36, 30, 90, 0.08);
+  --shadow-preview: 0 25px 70px rgba(36, 30, 90, 0.14);
+  --shadow-floating: 0 12px 35px rgba(36, 30, 90, 0.12);
+
+  /* Landing headings */
+  --font-size-section-title: clamp(30px, 4vw, 42px);
 
   /* Base */
   --color-white: #ffffff;

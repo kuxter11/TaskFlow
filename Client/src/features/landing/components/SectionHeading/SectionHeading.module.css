@@ -1,0 +1,30 @@
+/* Space below the heading is set by the section (flex gap), not here. */
+.heading {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.label {
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.title {
+  margin: var(--space-4) 0;
+  color: var(--color-navy);
+  font-size: var(--font-size-section-title);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -1px;
+}
+
+.description {
+  margin: 0;
+  color: var(--color-navy-muted);
+  font-size: var(--font-size-xl);
+  line-height: 1.7;
+}

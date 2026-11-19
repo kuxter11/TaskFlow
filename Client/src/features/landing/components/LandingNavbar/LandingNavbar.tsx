@@ -1,5 +1,5 @@
-import "./LandingNavbar.css";
 import type { AuthMode } from "@/types/auth.types";
+import styles from "./LandingNavbar.module.css";
 
 interface LandingNavbarProps {
   onOpenAuth: (mode: AuthMode) => void;
@@ -7,21 +7,25 @@ interface LandingNavbarProps {
 
 export default function LandingNavbar({ onOpenAuth }: LandingNavbarProps) {
   return (
-    <header className="landing-navbar">
-      <a href="#" className="landing-logo">
-        <span className="landing-logo-icon">M</span>
+    <header className={styles.navbar}>
+      <a href="#" className={styles.logo}>
+        <span className={styles.logoIcon}>M</span>
         <span>TaskFlow</span>
       </a>
 
-      <nav className="landing-nav-links">
-        <a href="#features">Features</a>
-        <a href="#about">About</a>
+      <nav className={styles.links}>
+        <a href="#features" className={styles.link}>
+          Features
+        </a>
+        <a href="#about" className={styles.link}>
+          About
+        </a>
       </nav>
 
-      <div className="landing-nav-actions">
+      <div className={styles.actions}>
         <button
           type="button"
-          className="landing-login-button"
+          className={`${styles.button} ${styles.login}`}
           onClick={() => onOpenAuth("login")}
         >
           Login
@@ -29,7 +33,7 @@ export default function LandingNavbar({ onOpenAuth }: LandingNavbarProps) {
 
         <button
           type="button"
-          className="landing-register-button"
+          className={`${styles.button} ${styles.register}`}
           onClick={() => onOpenAuth("register")}
         >
           Get Started

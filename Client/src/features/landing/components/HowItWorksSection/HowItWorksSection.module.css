@@ -1,0 +1,32 @@
+/* The section places heading and grid (gap = space under the heading). */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  padding: 100px 8%;
+  background: var(--color-primary-bg);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Mobile and tablet */
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    gap: 35px;
+    padding: 70px var(--space-5);
+  }
+}

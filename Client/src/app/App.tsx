@@ -9,7 +9,7 @@ import { useAuthModal } from "@/features/auth/hooks/useAuthModal";
 import AuthModal from "@/features/auth/components/AuthModal/AuthModal";
 import Layout from "@/components/layout/Layout/Layout";
 import ProjectsPage from "@/features/projects/pages/ProjectsPage/ProjectsPage";
-import LandingPage from "@/components/landing/LandingPage";
+import LandingPage from "@/features/landing/pages/LandingPage/LandingPage";
 import ProjectBoardPage from "@/features/projects/pages/ProjectBoardPage/ProjectBoardPage";
 import ProjectPage from "@/features/projects/pages/ProjectPage/ProjectPage";
 import ProjectMembersPage from "@/features/projects/pages/ProjectMembersPage/ProjectMembersPage";
