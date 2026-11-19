@@ -14,6 +14,8 @@
   --color-primary-soft: #f1efff;
   --color-primary-tint: #f0edff;
   --color-primary-bg: #f7f6ff;
+  --color-primary-focus: #7c6cf0;
+  --color-primary-border-hover: #c4bdf5;
 
   /* Navy (sidebar, headings) */
   --color-navy: #17172b;

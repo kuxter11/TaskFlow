@@ -2,7 +2,7 @@ import type {
   LoginData,
   LoginDataResponse,
   RegisterData,
-} from "@/types/auth.types";
+} from "./types";
 import type { User } from "@/types/user.types";
 
 const API_URL = import.meta.env.VITE_API_URL;

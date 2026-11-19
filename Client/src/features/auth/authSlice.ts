@@ -8,14 +8,14 @@ import type {
   LoginData,
   LoginDataResponse,
   RegisterData,
-} from "@/types/auth.types";
+} from "./types";
 
 import {
   login as loginRequest,
   register as registerRequest,
   refresh as refreshRequest,
   logout as logoutRequest,
-} from "@/api/auth.api";
+} from "./auth.api";
 
 interface AuthState {
   user: User | null;

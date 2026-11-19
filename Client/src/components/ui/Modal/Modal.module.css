@@ -1,5 +1,9 @@
 /* ---------- Shared ---------- */
 .dialog {
+  /* Center it. Needed because the global reset sets margin: 0 on everything. */
+  position: fixed;
+  inset: 0;
+  margin: auto;
   border: none;
   background: var(--color-white);
 }
